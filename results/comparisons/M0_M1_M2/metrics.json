@@ -1,0 +1,512 @@
+{
+  "harmonic_convergence": {
+    "m_max": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20
+    ],
+    "normalized_traction_residual": [
+      0.2211314759694877,
+      0.058118885651388424,
+      0.004924458871667002,
+      0.00019074686479938943,
+      4.238509813534514e-06,
+      6.110638900412759e-08,
+      6.179257529445831e-10,
+      4.6258384882504216e-12,
+      2.6843341007958903e-14,
+      1.0507693355988707e-15
+    ],
+    "relative_f_pp_error": [
+      0.09810363564559733,
+      0.0069285125187861386,
+      0.00015646106719099796,
+      1.4025266966123706e-07,
+      4.96186561886441e-11,
+      8.375393375900046e-15,
+      1.8594420651268694e-16,
+      0.0,
+      1.856793134018621e-16,
+      0.0
+    ],
+    "reference_m_max": 24,
+    "paper_guide_m_max": 15
+  },
+  "single_frequency_radius_sensitivity": {
+    "0.05_mm": {
+      "maximum_abs_f_pp": 0.24304213745291206,
+      "backscatter_abs_f_pp": 0.24304213745291206
+    },
+    "0.1_mm": {
+      "maximum_abs_f_pp": 0.7436209994297279,
+      "backscatter_abs_f_pp": 0.7436209994297279
+    },
+    "0.25_mm": {
+      "maximum_abs_f_pp": 1.471266833300955,
+      "backscatter_abs_f_pp": 1.062574198603563
+    },
+    "0.5_mm": {
+      "maximum_abs_f_pp": 2.746097696873596,
+      "backscatter_abs_f_pp": 1.5162369507364357
+    },
+    "1_mm": {
+      "maximum_abs_f_pp": 5.444361641698091,
+      "backscatter_abs_f_pp": 2.0677496440082725
+    }
+  },
+  "single_frequency_kernel": {
+    "frequency_hz": 5000000.0,
+    "radius_m": 0.0005,
+    "incident_angles_deg": [
+      0.0,
+      29.999999999999996,
+      59.99999999999999
+    ],
+    "m_max": 18,
+    "maximum_normalized_traction_residual": 2.6881439262062935e-14
+  },
+  "model": "M2-2D exact plane-strain P-SV scattering by a traction-free circular cavity",
+  "configuration": {
+    "centre_m": [
+      0.0,
+      0.04
+    ],
+    "radius_m": 0.0005,
+    "material": {
+      "density_kg_m3": 2700.0,
+      "c_p_m_s": 6300.0,
+      "c_s_m_s": 3100.0
+    },
+    "centre_frequency_hz": 5000000.0,
+    "sigma_s": 3.5e-07,
+    "m1_boundary_points": 64,
+    "m2_m_max": 18,
+    "array_elements": 64,
+    "time_samples": 1000
+  },
+  "m2_validation": {
+    "maximum_normalized_traction_residual_over_active_fft_bins": 4.0997924632257405e-11,
+    "maximum_condition_number_over_active_fft_bins": 115130197.75392257,
+    "active_frequency_range_hz": [
+      2249999.9999999995,
+      7749999.999999999
+    ],
+    "active_frequency_bin_count": 111,
+    "selected_m_max": 18,
+    "maximum_paper_guide_m_max": 17,
+    "fft_edge_to_global_peak_ratio": 4.582419359527642e-10,
+    "maximum_fmc_reciprocity_error": 1.2212453270876722e-15
+  },
+  "runtime_s": {
+    "m2_fmc": 2.723311999987345,
+    "four_tfm_images": 11.826294400001643,
+    "whole_analysis": 34.14085569998133
+  },
+  "output_dimensions": {
+    "fmc": [
+      64,
+      64,
+      1000
+    ],
+    "positive_frequency_fmc": [
+      64,
+      64,
+      501
+    ],
+    "tfm": [
+      101,
+      101
+    ]
+  },
+  "representative_ascans": {
+    "Central pulse-echo": {
+      "indices": [
+        31,
+        31
+      ],
+      "envelope_peak_us": {
+        "M0 point": 12.700000000000003,
+        "M1 boundary": 12.720000000000002,
+        "M2-2D elastic": 12.560000000000002,
+        "Experimental": 12.820000000000002
+      },
+      "waveform_correlation_with_experiment": {
+        "M0 point": 0.36803623158176996,
+        "M1 boundary": -0.1956563861421577,
+        "M2-2D elastic": 0.3444786216987519
+      },
+      "envelope_correlation_with_experiment": {
+        "M0 point": 0.659018744535448,
+        "M1 boundary": 0.6149009819914166,
+        "M2-2D elastic": 0.5224906320550401
+      },
+      "model_waveform_correlations": {
+        "M0_M1": -0.8703334495335313,
+        "M0_M2": 0.3328128940303665,
+        "M1_M2": -0.3916884352631118
+      }
+    },
+    "Off-axis pulse-echo": {
+      "indices": [
+        16,
+        16
+      ],
+      "envelope_peak_us": {
+        "M0 point": 13.080000000000002,
+        "M1 boundary": 13.080000000000002,
+        "M2-2D elastic": 12.920000000000002,
+        "Experimental": 12.820000000000002
+      },
+      "waveform_correlation_with_experiment": {
+        "M0 point": 0.20496259729368746,
+        "M1 boundary": -0.20278700395869445,
+        "M2-2D elastic": 0.3337063060771153
+      },
+      "envelope_correlation_with_experiment": {
+        "M0 point": 0.7273831464213655,
+        "M1 boundary": 0.7033083065230028,
+        "M2-2D elastic": 0.7770978015603165
+      },
+      "model_waveform_correlations": {
+        "M0_M1": -0.8703355472126432,
+        "M0_M2": 0.33281289403036235,
+        "M1_M2": -0.3919408394109911
+      }
+    },
+    "Pitch-catch": {
+      "indices": [
+        16,
+        47
+      ],
+      "envelope_peak_us": {
+        "M0 point": 13.080000000000002,
+        "M1 boundary": 13.080000000000002,
+        "M2-2D elastic": 12.920000000000002,
+        "Experimental": 13.200000000000003
+      },
+      "waveform_correlation_with_experiment": {
+        "M0 point": 0.02150143145257608,
+        "M1 boundary": 0.10477855865870961,
+        "M2-2D elastic": 0.2959077655764859
+      },
+      "envelope_correlation_with_experiment": {
+        "M0 point": 0.7335684685463657,
+        "M1 boundary": 0.706916256306691,
+        "M2-2D elastic": 0.5832914066905249
+      },
+      "model_waveform_correlations": {
+        "M0_M1": -0.923121571739366,
+        "M0_M2": 0.4739165073901811,
+        "M1_M2": -0.5231616098678762
+      }
+    }
+  },
+  "gated_arrival_maps": {
+    "M0 point": {
+      "central_peak_us": 12.700000000000003,
+      "peak_time_range_us": [
+        12.700000000000003,
+        14.180000000000001
+      ]
+    },
+    "M1 boundary": {
+      "central_peak_us": 12.720000000000002,
+      "peak_time_range_us": [
+        12.720000000000002,
+        14.180000000000001
+      ]
+    },
+    "M2-2D elastic": {
+      "central_peak_us": 12.560000000000002,
+      "peak_time_range_us": [
+        12.560000000000002,
+        14.020000000000001
+      ]
+    },
+    "Experimental": {
+      "central_peak_us": 12.820000000000002,
+      "peak_time_range_us": [
+        10.020000000000003,
+        16.380000000000003
+      ]
+    }
+  },
+  "tfm": {
+    "M0 point": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_minus_6_db_width_mm": 1.2223823571667747,
+      "axial_minus_6_db_width_mm": 0.2998001387337218,
+      "lateral_peak_sidelobe_level_db": -20.274961889670344,
+      "axial_peak_sidelobe_level_db": -2.5357615858744027
+    },
+    "M1 boundary": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_minus_6_db_width_mm": 1.3709971342261382,
+      "axial_minus_6_db_width_mm": 0.25919896157675093,
+      "lateral_peak_sidelobe_level_db": -14.462313996766564,
+      "axial_peak_sidelobe_level_db": -1.2085101537608742
+    },
+    "M2-2D elastic": {
+      "peak_m": [
+        0.0,
+        0.039599999999999996
+      ],
+      "localisation_error_mm": 0.4000000000000045,
+      "lateral_minus_6_db_width_mm": 1.2113783435099716,
+      "axial_minus_6_db_width_mm": 0.4570396552688316,
+      "lateral_peak_sidelobe_level_db": -20.34843208726832,
+      "axial_peak_sidelobe_level_db": -0.12224263266047898
+    },
+    "Experimental": {
+      "peak_m": [
+        0.0,
+        0.0404
+      ],
+      "localisation_error_mm": 0.3999999999999976,
+      "lateral_minus_6_db_width_mm": 26.598445475682595,
+      "axial_minus_6_db_width_mm": 0.4059895940836111,
+      "lateral_peak_sidelobe_level_db": -6.186887970574308,
+      "axial_peak_sidelobe_level_db": -14.599046765515325
+    }
+  },
+  "angle_binned_response": {
+    "M0 point": {
+      "angle_deg": [
+        -165.00000000000003,
+        -135.0,
+        -105.00000000000001,
+        -75.0,
+        -45.000000000000014,
+        -15.000000000000009,
+        14.999999999999996,
+        44.999999999999986,
+        74.99999999999999,
+        104.99999999999999,
+        134.99999999999997,
+        165.0
+      ],
+      "normalized_magnitude": [
+        1.0,
+        1.0,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        1.0,
+        0.9999999999999999
+      ],
+      "phase_rad": [
+        -3.7565397350648597e-14,
+        -3.882959584247171e-14,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        -3.882959584247171e-14,
+        -3.760632026095136e-14
+      ]
+    },
+    "M1 boundary": {
+      "angle_deg": [
+        -165.00000000000003,
+        -135.0,
+        -105.00000000000001,
+        -75.0,
+        -45.000000000000014,
+        -15.000000000000009,
+        14.999999999999996,
+        44.999999999999986,
+        74.99999999999999,
+        104.99999999999999,
+        134.99999999999997,
+        165.0
+      ],
+      "normalized_magnitude": [
+        0.7358760737706551,
+        1.0,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        1.0,
+        0.7380661431553438
+      ],
+      "phase_rad": [
+        3.131420302131687,
+        3.1332176289516522,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        3.1332176289516522,
+        3.1314426501427395
+      ]
+    },
+    "M2-2D elastic": {
+      "angle_deg": [
+        -165.00000000000003,
+        -135.0,
+        -105.00000000000001,
+        -75.0,
+        -45.000000000000014,
+        -15.000000000000009,
+        14.999999999999996,
+        44.999999999999986,
+        74.99999999999999,
+        104.99999999999999,
+        134.99999999999997,
+        165.0
+      ],
+      "normalized_magnitude": [
+        1.0,
+        0.8247601380885993,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        0.8247601380885993,
+        0.9982240110264284
+      ],
+      "phase_rad": [
+        1.1633767054049702,
+        0.8488563949640391,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        0.8488563949640393,
+        1.1612261453472437
+      ]
+    },
+    "Experimental": {
+      "angle_deg": [
+        -165.00000000000003,
+        -135.0,
+        -105.00000000000001,
+        -75.0,
+        -45.000000000000014,
+        -15.000000000000009,
+        14.999999999999996,
+        44.999999999999986,
+        74.99999999999999,
+        104.99999999999999,
+        134.99999999999997,
+        165.0
+      ],
+      "normalized_magnitude": [
+        0.42758926627150373,
+        1.0,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        0.9955774112793405,
+        0.4072422001372147
+      ],
+      "phase_rad": [
+        2.627133276308779,
+        1.8539526288500157,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        1.9215464115087049,
+        2.5552624318922312
+      ]
+    }
+  },
+  "broadband_radius_sensitivity": {
+    "0.05_mm": {
+      "radius_m": 5e-05,
+      "peak_time_us": 12.700000000000003,
+      "peak_abs_amplitude_uncalibrated": 0.2379081638146522,
+      "rms_amplitude_uncalibrated": 0.030600212731244882,
+      "correlation_with_0.05_mm": 1.0
+    },
+    "0.1_mm": {
+      "radius_m": 0.0001,
+      "peak_time_us": 12.720000000000002,
+      "peak_abs_amplitude_uncalibrated": 0.7267020742519835,
+      "rms_amplitude_uncalibrated": 0.09227094642897841,
+      "correlation_with_0.05_mm": 0.9496354607420938
+    },
+    "0.25_mm": {
+      "radius_m": 0.00025,
+      "peak_time_us": 12.620000000000001,
+      "peak_abs_amplitude_uncalibrated": 1.0417328883271293,
+      "rms_amplitude_uncalibrated": 0.13282794748831034,
+      "correlation_with_0.05_mm": 0.7813335415743682
+    },
+    "0.5_mm": {
+      "radius_m": 0.0005,
+      "peak_time_us": 12.560000000000002,
+      "peak_abs_amplitude_uncalibrated": 1.477463340688036,
+      "rms_amplitude_uncalibrated": 0.1864610796993614,
+      "correlation_with_0.05_mm": -0.9401194295824729
+    },
+    "1_mm": {
+      "radius_m": 0.001,
+      "peak_time_us": 12.380000000000003,
+      "peak_abs_amplitude_uncalibrated": 1.9764665405216197,
+      "rms_amplitude_uncalibrated": 0.2512026652738157,
+      "correlation_with_0.05_mm": -0.021326951320739643
+    }
+  },
+  "experimental_interpretation": "Comparisons use separate normalization and a common 10\u201316.5 us gate. Absolute model-to-experiment amplitude is uncalibrated. The experimental ROI maximum is broad and is not treated as confirmed SDH ground truth.",
+  "unsupported": [
+    "general h!=0 3D T-matrix",
+    "finite probe plane-wave spectrum",
+    "Auld electromechanical receive model",
+    "SH coupling",
+    "P-to-SV measured trace",
+    "free-surface/multiple scattering",
+    "calibrated voltage amplitude"
+  ]
+}

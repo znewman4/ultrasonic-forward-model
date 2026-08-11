@@ -1,0 +1,185 @@
+{
+  "comparison": "M0 point reflector versus M1 circular boundary",
+  "configuration": {
+    "centre_m": [
+      0.0,
+      0.04
+    ],
+    "radius_m": 0.0005,
+    "n_boundary_points": 64,
+    "wave_speed_m_s": 6300.0,
+    "centre_frequency_hz": 5000000.0,
+    "sigma_s": 3.5e-07,
+    "amplitude": 1.0
+  },
+  "representative_ascans": {
+    "central_pulse_echo": {
+      "element_indices": [
+        31,
+        31
+      ],
+      "waveform_correlation": -0.8703334547595473,
+      "m0_geometric_arrival_us": 12.698806442308223,
+      "m0_envelope_peak_us": 12.700000000000003,
+      "m1_earliest_boundary_arrival_us": 12.540081267520526,
+      "m1_mean_boundary_arrival_us": 12.69930246351791,
+      "m1_latest_boundary_arrival_us": 12.85753174015058,
+      "m1_envelope_peak_us": 12.720000000000002,
+      "envelope_peak_shift_m1_minus_m0_us": 0.01999999999999981
+    },
+    "off_axis_pulse_echo": {
+      "element_indices": [
+        16,
+        16
+      ],
+      "waveform_correlation": -0.8703355504279496,
+      "m0_geometric_arrival_us": 13.071330653732575,
+      "m0_envelope_peak_us": 13.080000000000002,
+      "m1_earliest_boundary_arrival_us": 12.912749658104122,
+      "m1_mean_boundary_arrival_us": 13.071812538403979,
+      "m1_latest_boundary_arrival_us": 13.229915226944225,
+      "m1_envelope_peak_us": 13.080000000000002,
+      "envelope_peak_shift_m1_minus_m0_us": 0.0
+    },
+    "pitch_catch": {
+      "element_indices": [
+        16,
+        47
+      ],
+      "waveform_correlation": -0.9231215737020743,
+      "m0_geometric_arrival_us": 13.071330653732575,
+      "m0_envelope_peak_us": 13.080000000000002,
+      "m1_earliest_boundary_arrival_us": 12.917183833793617,
+      "m1_mean_boundary_arrival_us": 13.071812538403982,
+      "m1_latest_boundary_arrival_us": 13.225585901916771,
+      "m1_envelope_peak_us": 13.080000000000002,
+      "envelope_peak_shift_m1_minus_m0_us": 0.0
+    }
+  },
+  "full_fmc_waveform_correlation": -0.89937833901144,
+  "full_fmc_relative_l2_difference": 1.2083894508742479,
+  "tfm": {
+    "M0": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_minus_6_db_width_mm": 1.2223823571667747,
+      "axial_minus_6_db_width_mm": 0.2998001387337218,
+      "lateral_peak_sidelobe_level_db": -20.274961889670344,
+      "axial_peak_sidelobe_level_db": -2.5357615858744027
+    },
+    "M1": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_minus_6_db_width_mm": 1.3709971342261382,
+      "axial_minus_6_db_width_mm": 0.25919896157675093,
+      "lateral_peak_sidelobe_level_db": -14.462313996766564,
+      "axial_peak_sidelobe_level_db": -1.2085101537608742
+    }
+  },
+  "convergence_vs_boundary_point_count": {
+    "radius_mm": 0.5,
+    "selected_element_indices": [
+      0,
+      16,
+      32,
+      47,
+      63
+    ],
+    "reference_n_points": 256,
+    "values": {
+      "4": {
+        "relative_l2_error": 2.3794144557212498,
+        "waveform_correlation": -0.5071577646937324
+      },
+      "8": {
+        "relative_l2_error": 0.11133865574394539,
+        "waveform_correlation": 0.9937829867160526
+      },
+      "16": {
+        "relative_l2_error": 7.624621512067908e-07,
+        "waveform_correlation": 0.9999999999997091
+      },
+      "32": {
+        "relative_l2_error": 2.2150591146838714e-14,
+        "waveform_correlation": 0.9999999999999997
+      },
+      "64": {
+        "relative_l2_error": 1.7334322352126236e-14,
+        "waveform_correlation": 1.0
+      },
+      "128": {
+        "relative_l2_error": 8.221734171174005e-15,
+        "waveform_correlation": 0.9999999999999997
+      }
+    }
+  },
+  "radius_tending_to_zero": {
+    "n_points": 64,
+    "selected_element_indices": [
+      0,
+      16,
+      32,
+      47,
+      63
+    ],
+    "values": {
+      "0_um": {
+        "radius_m": 0.0,
+        "relative_l2_difference_from_m0": 9.172959893661347e-16,
+        "waveform_correlation_with_m0": 0.9999999999999999
+      },
+      "1_um": {
+        "radius_m": 1e-06,
+        "relative_l2_difference_from_m0": 2.3918016745175183e-05,
+        "waveform_correlation_with_m0": 0.9999999999943098
+      },
+      "10_um": {
+        "radius_m": 1e-05,
+        "relative_l2_difference_from_m0": 0.0023903439242701,
+        "waveform_correlation_with_m0": 0.9999999429656353
+      },
+      "50_um": {
+        "radius_m": 5e-05,
+        "relative_l2_difference_from_m0": 0.058881372754105765,
+        "waveform_correlation_with_m0": 0.9999622407602291
+      },
+      "100_um": {
+        "radius_m": 0.0001,
+        "relative_l2_difference_from_m0": 0.2248650395119839,
+        "waveform_correlation_with_m0": 0.9992627919380551
+      },
+      "250_um": {
+        "radius_m": 0.00025,
+        "relative_l2_difference_from_m0": 1.0119436468045493,
+        "waveform_correlation_with_m0": -0.09017285884002708
+      },
+      "500_um": {
+        "radius_m": 0.0005,
+        "relative_l2_difference_from_m0": 1.2186832909736192,
+        "waveform_correlation_with_m0": -0.9048070858218368
+      }
+    }
+  },
+  "metric_definitions": {
+    "waveform_correlation": "Normalised real waveform inner product (cosine similarity) over the stated samples.",
+    "minus_6_db_width": "Interpolated amplitude crossings at 10^(-6/20) around the connected global-peak lobe.",
+    "peak_sidelobe_level": "Largest sampled slice amplitude outside the connected -6 dB main lobe, in dB relative to the slice peak.",
+    "convergence_and_zero_limit": "Computed on element indices [0, 16, 32, 47, 63] with the full time vector."
+  },
+  "M1_scope": "Finite circular geometry and coherent geometric path interference.",
+  "M1_exclusions": [
+    "traction-free elastic boundary condition",
+    "mode conversion",
+    "realistic cylindrical scattering coefficients",
+    "illumination and shadowing",
+    "directivity",
+    "attenuation",
+    "geometric spreading"
+  ]
+}

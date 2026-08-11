@@ -1,0 +1,35 @@
+{
+  "predicted_central_arrival_us": 12.698806442308223,
+  "experimental_gated_echo_us": 12.820000000000002,
+  "timing_difference_us": 0.12119355769177861,
+  "synthetic_tfm_peak_m": [
+    0.0,
+    0.04
+  ],
+  "experimental_tfm_peak_m": [
+    0.0,
+    0.0404
+  ],
+  "synthetic_lateral_fwhm_mm": 1.0000000000000009,
+  "synthetic_axial_fwhm_mm": 0.0,
+  "experimental_lateral_fwhm_mm": 26.0,
+  "experimental_axial_fwhm_mm": 0.1999999999999988,
+  "synthetic_relative_outside_peak": 0.08785664894239813,
+  "experimental_relative_outside_peak": 0.9985037964706514,
+  "experimental_ambiguity": "The strongest ROI response is a broad lateral band near 40.4 mm, not a clearly isolated point-like indication. It may include a boundary response, and this dataset alone does not support confidently labelling the ROI maximum as the 1 mm hole.",
+  "interpretation": {
+    "timing": "Compared using a \u00b12 \u00b5s gate about the geometric prediction.",
+    "location": "Compared on the identical x-z grid and 30\u201350 mm experimental depth ROI.",
+    "amplitude": "Not a validation target: traces are normalized separately because the model omits realistic amplitude physics."
+  },
+  "model_exclusions": [
+    "realistic SDH scattering",
+    "geometric spreading",
+    "array-element directivity",
+    "attenuation",
+    "probe/electronics response",
+    "noise",
+    "mode conversion",
+    "boundary reflections"
+  ]
+}

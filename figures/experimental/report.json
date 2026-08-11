@@ -1,0 +1,17 @@
+{
+  "fmc_shape": [
+    64,
+    64,
+    1000
+  ],
+  "depth_roi_mm": [
+    30.0,
+    50.0
+  ],
+  "strongest_roi_indication_m": [
+    0.0,
+    0.0404
+  ],
+  "offset_from_filename_nominal_mm": 0.3999999999999976,
+  "ground_truth_note": "The approximately 40 mm depth and 1 mm diameter are filename metadata, not stored ground truth."
+}

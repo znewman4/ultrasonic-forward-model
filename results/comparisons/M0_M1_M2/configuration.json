@@ -1,0 +1,24 @@
+{
+  "model": "M2-2D exact plane-strain P-SV scattering by a traction-free circular cavity",
+  "parameters": {
+    "centre_m": [
+      0.0,
+      0.04
+    ],
+    "radius_m": 0.0005,
+    "material": {
+      "density_kg_m3": 2700.0,
+      "c_p_m_s": 6300.0,
+      "c_s_m_s": 3100.0
+    },
+    "centre_frequency_hz": 5000000.0,
+    "sigma_s": 3.5e-07,
+    "m1_boundary_points": 64,
+    "m2_m_max": 18,
+    "array_elements": 64,
+    "time_samples": 1000
+  },
+  "paper_convention": "exp(-i omega t), H_m^(1) outgoing",
+  "fft_conversion": "conjugate paper F_PP for NumPy irfft positive frequencies",
+  "propagation": "phase-only point-to-centre, H_tx=H_rx=1"
+}

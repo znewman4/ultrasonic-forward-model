@@ -1,0 +1,13 @@
+{
+  "reflector_m": [
+    0.0,
+    0.04
+  ],
+  "matrix_symmetric": true,
+  "central_element_index_zero_based": 31,
+  "central_pulse_echo_us": 12.698806442308223,
+  "minimum_pulse_echo_us": 12.698806442308223,
+  "left_edge_pulse_echo_us": 14.175319575205664,
+  "right_edge_pulse_echo_us": 14.175319575205664,
+  "central_is_shortest": true
+}

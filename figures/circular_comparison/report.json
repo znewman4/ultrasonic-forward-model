@@ -1,0 +1,119 @@
+{
+  "model": "geometric finite-extent circular-boundary approximation",
+  "not_modelled": [
+    "elastic traction-free boundary conditions",
+    "mode conversion",
+    "element directivity",
+    "attenuation",
+    "realistic cylindrical scattering coefficients"
+  ],
+  "baseline_radius_mm": 0.5,
+  "baseline_n_points": 64,
+  "point": {
+    "peak_m": [
+      0.0,
+      0.04
+    ],
+    "localisation_error_mm": 0.0,
+    "lateral_fwhm_mm": 1.2246658257585186,
+    "axial_fwhm_mm": 0.30051369867075545
+  },
+  "circular": {
+    "peak_m": [
+      0.0,
+      0.04
+    ],
+    "localisation_error_mm": 0.0,
+    "lateral_fwhm_mm": 1.3733906134130573,
+    "axial_fwhm_mm": 0.25981588589000376
+  },
+  "central_ascan_relative_l2_difference": 1.1802324231431494,
+  "radius_sweep": {
+    "0_mm": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.2246658257585186,
+      "axial_fwhm_mm": 0.30051369867075545,
+      "fmc_relative_l2_difference_from_point": 9.08748154122648e-16,
+      "central_ascan_relative_l2_difference_from_point": 8.280971674357516e-16
+    },
+    "0.25_mm": {
+      "peak_m": [
+        0.0,
+        0.0412
+      ],
+      "localisation_error_mm": 1.1999999999999997,
+      "lateral_fwhm_mm": 1.1715654362163732,
+      "axial_fwhm_mm": 0.44327906905114456,
+      "fmc_relative_l2_difference_from_point": 1.0213356359958095,
+      "central_ascan_relative_l2_difference_from_point": 1.0449524463882187
+    },
+    "0.5_mm": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.3733906134130573,
+      "axial_fwhm_mm": 0.25981588589000376,
+      "fmc_relative_l2_difference_from_point": 1.2083894508742479,
+      "central_ascan_relative_l2_difference_from_point": 1.1802324231431494
+    },
+    "1_mm": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.135506633757633,
+      "axial_fwhm_mm": 0.3396278168590616,
+      "fmc_relative_l2_difference_from_point": 1.185530040727313,
+      "central_ascan_relative_l2_difference_from_point": 1.2000433949024012
+    }
+  },
+  "point_count_sweep": {
+    "8": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.2531960757184917,
+      "axial_fwhm_mm": 0.25650005994457686,
+      "fmc_relative_l2_difference_from_m64": 0.11721546558052794
+    },
+    "16": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.373390390013711,
+      "axial_fwhm_mm": 0.25981588854732257,
+      "fmc_relative_l2_difference_from_m64": 8.572732196215744e-07
+    },
+    "32": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.3733906134130578,
+      "axial_fwhm_mm": 0.25981588589000376,
+      "fmc_relative_l2_difference_from_m64": 2.2285841836218428e-14
+    },
+    "64": {
+      "peak_m": [
+        0.0,
+        0.04
+      ],
+      "localisation_error_mm": 0.0,
+      "lateral_fwhm_mm": 1.3733906134130573,
+      "axial_fwhm_mm": 0.25981588589000376,
+      "fmc_relative_l2_difference_from_m64": 0.0
+    }
+  }
+}

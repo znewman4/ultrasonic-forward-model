@@ -1,0 +1,14 @@
+{
+  "fmc_shape": [
+    64,
+    64,
+    1000
+  ],
+  "predicted_arrival_us": 12.698806442308223,
+  "envelope_peak_us": 12.700000000000003,
+  "tfm_peak_m": [
+    0.0,
+    0.04
+  ],
+  "localisation_error_mm": 0.0
+}
