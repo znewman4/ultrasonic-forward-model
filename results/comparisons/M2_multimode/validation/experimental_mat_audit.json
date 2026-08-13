@@ -1,0 +1,135 @@
+{
+  "source_file": "C:\\Users\\zachn\\OneDrive\\Documents\\Projects\\ultrasonic-forward-model\\data\\raw\\5MHz_64els_h40mm_hole1mm_Al_g30_20240220.mat",
+  "scope": "Read-only audit; filename tokens are not treated as verified metadata.",
+  "record": {
+    "fmc_shape": [
+      64,
+      64,
+      1000
+    ],
+    "channel_storage_shape": [
+      1000,
+      4096
+    ],
+    "sample_count": 1000,
+    "sample_interval_ns": 20.0,
+    "sampling_frequency_mhz": 50.0,
+    "duration_us": 19.98,
+    "maximum_timestep_nonuniformity_ps": 3.5800376911295038e-09,
+    "complete_tx_rx_grid": true
+  },
+  "stored_metadata": {
+    "manufacturer": "Imasonic",
+    "nominal_centre_frequency_mhz": 5.0,
+    "stored_longitudinal_speed_m_s": 6300.0,
+    "stored_shear_speed_m_s": null,
+    "element_centre_x_span_mm": [
+      -19.845000000000002,
+      19.845000000000002
+    ],
+    "centre_pitch_mm": 0.6299999999999986,
+    "endpoint_vector_mm": [
+      -0.2649999999999996,
+      7.5,
+      0.0
+    ],
+    "centre_minus_endpoint_midpoint_mm": [
+      -0.13250000000000067,
+      -3.75,
+      0.0
+    ],
+    "endpoint_interpretation_warning": "Stored endpoint midpoints do not equal stored element centres; do not infer active element width/directivity without schema documentation."
+  },
+  "digitisation": {
+    "unique_amplitude_levels": 256,
+    "minimum": -1.0,
+    "maximum": 0.9921875,
+    "median_level_increment": 0.0078125,
+    "minimum_clip_count": 8418,
+    "maximum_clip_count": 12364,
+    "zero_count": 2485884,
+    "interpretation": "Exactly 256 levels and endpoint occupancy are consistent with normalized 8-bit acquisition and clipping."
+  },
+  "gates": {
+    "early_0_to_2_us": {
+      "start_us": 0.0,
+      "stop_us": 2.0,
+      "sample_count_all_traces": 409600,
+      "minimum_clip_count": 7686,
+      "maximum_clip_count": 11030,
+      "relative_reciprocity_l2": 0.23008619831114277,
+      "reciprocity_correlation": 0.9735293549089051
+    },
+    "quiet_2_to_8_us": {
+      "start_us": 2.0,
+      "stop_us": 8.0,
+      "sample_count_all_traces": 1228800,
+      "minimum_clip_count": 0,
+      "maximum_clip_count": 0,
+      "relative_reciprocity_l2": 0.16679734985482,
+      "reciprocity_correlation": 0.9860890604987229
+    },
+    "echo_10_to_16_5_us": {
+      "start_us": 10.0,
+      "stop_us": 16.5,
+      "sample_count_all_traces": 1331200,
+      "minimum_clip_count": 732,
+      "maximum_clip_count": 1334,
+      "relative_reciprocity_l2": 0.13536441598983562,
+      "reciprocity_correlation": 0.9908373171587411
+    },
+    "late_16_5_to_end_us": {
+      "start_us": 16.5,
+      "stop_us": 19.980000001,
+      "sample_count_all_traces": 716800,
+      "minimum_clip_count": 0,
+      "maximum_clip_count": 0,
+      "relative_reciprocity_l2": 0.2408288608762334,
+      "reciprocity_correlation": 0.9708197783770351
+    }
+  },
+  "reciprocal_pair_alignment_echo_gate": {
+    "maximum_tested_lag_samples": 4,
+    "median_best_aligned_correlation": 0.9977396526459501,
+    "best_lag_histogram": {
+      "-4": 2,
+      "-3": 1,
+      "-1": 106,
+      "0": 1886,
+      "1": 19,
+      "3": 1,
+      "4": 1
+    }
+  },
+  "channel_variation": {
+    "transmitter_mean_rms_minimum": 0.04436697659020018,
+    "transmitter_mean_rms_maximum": 0.11725895445249371,
+    "maximum_to_minimum_ratio": 2.6429331783314254,
+    "early_baseline_mean_absolute_median": 0.001953125,
+    "early_baseline_mean_absolute_maximum": 0.064296875
+  },
+  "echo_spectrum": {
+    "gate_us": [
+      10.0,
+      16.5
+    ],
+    "peak_frequency_mhz": 5.846153846153846,
+    "power_centroid_mhz": 6.7190736298875535,
+    "power_5_to_95_percent_band_mhz": [
+      3.892918423145607,
+      9.425399866412794
+    ],
+    "nonzero_bins": 163
+  },
+  "missing_for_calibrated_prediction": [
+    "measured shear speed and density for this block",
+    "attenuation/dispersion versus frequency",
+    "verified specimen dimensions and SDH centre/radius",
+    "wedge/couplant path and time-zero calibration",
+    "active element width/elevation and endpoint-field definitions",
+    "transmit pulse voltage and per-element transmit response",
+    "receive polarization sensitivity and per-element receive response",
+    "analogue/digital filters, gain, averaging and digitizer calibration",
+    "reference or background acquisition for transfer-function estimation"
+  ]
+}

@@ -35,7 +35,7 @@ cylinder axis is suppressed.
 
 The two-dimensional reduction sets axial wavenumber `h=0` and all axial
 derivatives to zero. P and SV couple at the traction-free boundary. SH
-decouples and is omitted from the first FMC model.
+decouples and is outside the two-dimensional P--SV model.
 
 ## Material
 
@@ -113,6 +113,18 @@ The unit incident P-potential plane wave is
  \qquad C_m=i^m e^{-im\alpha}.
 \]
 
+The unit incident SV-potential plane wave has the same scalar Jacobi--Anger
+coefficient sequence, with `k_s` replacing `k_p`:
+
+\[
+ \Psi^{inc}=\exp\{i k_s r\cos(\phi-\alpha)\}
+ =\sum_m C_mJ_m(k_sr)e^{im\phi}.
+\]
+
+The polarization is not added by hand: it follows from
+`u=curl(Psi e_z)`. With the stated polar basis this is the clockwise transverse
+polarization, which fixes the signs in cross-mode reciprocity.
+
 The scattered potentials are
 
 \[
@@ -127,7 +139,16 @@ The paper uses real even/odd cosine and sine parities. The implementation's
 orders `m=-m_max,...,+m_max` in the complex `exp(i m phi)` basis span the same
 angular space and avoid separate parity bookkeeping at `h=0`.
 
-At `r=a`, each harmonic is independent. The code solves
+At `r=a`, each harmonic is independent. Defining the two-column regular
+traction matrix `R_m` from unit regular P and SV potentials and the outgoing
+traction matrix `M_m` from outgoing P and SV potentials, the code solves
+
+\[
+ M_m T_m=-R_m
+\]
+
+with both right-hand sides at once. Thus every harmonic provides the complete
+transition matrix, not just the incident-P column. For example, the P column is
 
 \[
  \begin{bmatrix}
@@ -141,7 +162,21 @@ At `r=a`, each harmonic is independent. The code solves
  \end{bmatrix}_{r=a}
 \]
 
-with `numpy.linalg.solve`; it never forms an explicit inverse.
+with `numpy.linalg.solve`; it never forms an explicit inverse. In the regular
+plus outgoing basis, `J_m=(H_m^{(1)}+H_m^{(2)})/2`, so the incoming/outgoing
+partial-wave matrix is
+
+\[
+ S_m=I+2T_m.
+\]
+
+For a lossless traction-free cavity this matrix is unitary in the potential
+basis used here. The SV polarization convention gives the signed reciprocity
+identity
+
+\[
+ S_m=D S_m^T D,\qquad D=\operatorname{diag}(1,-1).
+\]
 
 ## Far-field functions
 
@@ -168,10 +203,61 @@ and
  F_{PS}=\sum_m B_m e^{im(\beta-\pi/2)}.
 \]
 
+Repeating the construction for incident SV gives `F_SP` and `F_SS`. The matrix
+layout throughout the code has outgoing modes as rows and incident modes as
+columns:
+
+\[
+ \mathbf F^{raw}=\begin{bmatrix}
+ F_{PP}&F_{SP}\\F_{PS}&F_{SS}
+ \end{bmatrix}.
+\]
+
 These are potential-amplitude angular functions, not the paper's full
 finite-probe electrical response. Circular symmetry makes them functions of
-`beta-alpha`. For this normalization, P--P reversal is
-`F_PP(beta,alpha)=F_PP(alpha+pi,beta+pi)`.
+`beta-alpha`.
+
+## Energy-flux normalization and physical comparisons
+
+For a plane potential of modal type `a` and amplitude `C`, the time-averaged
+incident intensity is
+
+\[
+ I_a=\frac12\rho\omega^2c_a|\mathbf u|^2
+     =\frac12\rho\frac{\omega^4}{c_a}|C|^2,
+ \qquad |\mathbf u|=k_a|C|.
+\]
+
+Combining this with the Hankel asymptotic shows that the differential scattered
+power divided by incident intensity is
+
+\[
+ \frac{d\sigma_{ba}}{d\beta}
+ =\frac{2}{\pi k_a}|F^{raw}_{ba}|^2.
+\]
+
+The code therefore defines
+
+\[
+ F^{flux}_{ba}=\sqrt{\frac{2}{\pi k_a}}F^{raw}_{ba},
+ \qquad \frac{d\sigma_{ba}}{d\beta}=|F^{flux}_{ba}|^2.
+\]
+
+It has units `sqrt(m)` and permits P/SV cross-sections and outgoing fractions
+of scattered power to be compared. A fraction of the total power in an
+infinite plane wave is not finite; losslessness is instead tested exactly by
+`S_m^H S_m=I` for every partial wave.
+
+Normalized reversed-ray reciprocity is direct for PP and SS. For conversion,
+the speed-dependent detailed-balance relation is
+
+\[
+ \sqrt{k_p}F^{flux}_{PS}(\beta,\alpha)
+ =\sqrt{k_s}F^{flux}_{SP}(\alpha+\pi,\beta+\pi),
+\]
+
+equivalent to equality of the corresponding raw potential far fields under
+ray reversal with the established polarization signs.
 
 ## Truncation and checks
 
@@ -182,25 +268,57 @@ The paper reports the practical azimuthal guide
 \]
 
 The implementation exposes this guide but also tests explicit convergence,
-both traction components on a dense boundary grid, simultaneous angular
-rotation, and the derived P--P reversal relation. Small radius is checked only
-for convergence toward zero elastic scattering, not equality with M0, whose
-amplitude is arbitrary.
+both traction components on a dense boundary grid for P and SV incidence,
+simultaneous angular rotation, normalized full-matrix reciprocity, and exact
+partial-wave energy balance. The production broadband study uses `m_max=26`,
+above the guide over the active pulse bins, because dense SV traction residuals
+converge more slowly. Small radius is checked only for convergence toward zero
+elastic scattering, not equality with M0, whose amplitude is arbitrary.
 
-## FFT and first array coupling
+## FFT and modal array coupling
 
 NumPy `irfft` reconstructs its positive-frequency coefficients using
 `exp(+i omega t)`, opposite to the paper's phasor. A paper-convention amplitude
 `Q(omega)` is therefore represented as `conj(Q)` in the positive-frequency FFT
-bins. The first LL array model uses
+bins. The backward-compatible LL array model uses
 
 \[
  X_{ij}(\omega)=P(\omega)F_{PP}(\beta_j,\alpha_i)^*
  \exp[-i\omega(r_i+r_j)/c_p].
 \]
 
-This is phase-only propagation with `H_tx=H_rx=1`. The real pulse spectrum is
+The complete ideal-wavefield model instead builds four spectra using
+
+\[
+\tau_{PP}=r_i/c_p+r_j/c_p,\quad
+\tau_{PS}=r_i/c_p+r_j/c_s,\quad
+\tau_{SP}=r_i/c_s+r_j/c_p,\quad
+\tau_{SS}=r_i/c_s+r_j/c_s.
+\]
+
+It returns `fmc_pp`, `fmc_ps`, `fmc_sp`, and `fmc_ss` separately. This is
+phase-only propagation with `H_tx=H_rx=1`; the real pulse spectrum is
 constructed from exactly the same Gaussian-windowed cosine used by M0/M1. The
 time record is rejected if a five-sigma pulse window would cross either FFT
-edge. `F_PS` is stored but does not enter the trace because an SV propagation
-leg and polarization-sensitive receiver have not yet been defined.
+edge. No modal sum is interpreted as transducer voltage because finite aperture,
+transmit coupling, receive polarization, and electromechanical sensitivity are
+not yet present.
+
+Mode-aware TFM uses the same transmit/receive speed pair as each FMC. Focusing
+PS data with PP delays is an intentional validation counterexample: it produces
+strong defocusing and a roughly 26 mm localization error in the reference
+study, compared with sub-millimetre error using PS delays.
+
+## Experimental boundary
+
+The current MAT record ends at 19.98 µs. For the reference 40 mm-deep,
+1 mm-diameter configuration, representative synthetic PP, PS/SP, and SS peaks
+occur at approximately 12.56, 21.28, and 25.50 µs. Only PP is therefore compared
+with experiment. No converted/shear experimental validation is claimed.
+
+The file stores only longitudinal speed and nominal frequency; it does not
+provide shear speed, density, attenuation, time zero, verified defect geometry,
+element aperture definitions, per-channel transfer functions, or acquisition
+gain/filter settings. Its 256 amplitude levels and occupied endpoints are
+consistent with clipped 8-bit data. These measurement limitations remain
+separate from validation of the analytical cavity boundary problem.

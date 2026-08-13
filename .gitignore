@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+
+# Local experimental and generated datasets. Existing files already tracked by
+# Git are unaffected; these rules prevent new binary acquisitions/simulations
+# from being added accidentally.
+/data/**/*.mat
+/data/**/*.npy
+/data/**/*.npz

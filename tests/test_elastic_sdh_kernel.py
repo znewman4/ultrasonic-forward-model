@@ -6,13 +6,18 @@ from src.scattering.elastic_sdh import (
     ElasticMaterial,
     bessel_j_values,
     elastic_sdh_broadband_scattering,
+    elastic_sdh_modal_broadband_scattering,
+    elastic_sdh_modal_scattering,
     elastic_sdh_scattering,
     hankel1_values,
     harmonic_orders,
     incident_l_coefficients,
     normalized_boundary_traction_residual,
+    normalized_boundary_traction_residual_modal,
+    normalized_modal_reciprocity_error,
     recommended_n_max,
     solve_harmonic_coefficients,
+    solve_harmonic_scattering_matrix,
     total_boundary_traction,
     traction_rphi_p,
     traction_rphi_sv,
@@ -179,3 +184,100 @@ def test_broadband_response_shape_and_zero_frequency() -> None:
     assert np.all(result.f_pp[0] == 0.0)
     assert np.all(result.f_ps[0] == 0.0)
     assert np.any(np.abs(result.f_pp[1:]) > 0.0)
+
+
+def test_full_harmonic_matrix_satisfies_traction_flux_and_reciprocity() -> None:
+    for order in range(-8, 9):
+        result = solve_harmonic_scattering_matrix(
+            FREQUENCY_HZ, RADIUS_M, MATERIAL, order
+        )
+        assert result.transition_matrix_potential.shape == (2, 2)
+        assert np.max(result.traction_residual_by_incident_mode) < 2.0e-13
+        assert result.energy_balance_error < 5.0e-14
+        assert result.reciprocity_error < 5.0e-14
+
+
+def test_p_and_sv_dense_boundary_tractions_converge() -> None:
+    angles = np.linspace(-np.pi, np.pi, 1001, endpoint=False)
+    histories = {"P": [], "SV": []}
+    for n_max in (8, 14, 20, 24):
+        result = elastic_sdh_modal_scattering(
+            FREQUENCY_HZ, RADIUS_M, MATERIAL, 0.27, angles, n_max
+        )
+        for mode in histories:
+            histories[mode].append(
+                normalized_boundary_traction_residual_modal(
+                    angles, result, MATERIAL, mode
+                )
+            )
+    assert histories["P"][2] < histories["P"][0]
+    assert histories["SV"][2] < histories["SV"][1] < histories["SV"][0]
+    assert histories["P"][-1] < 1.0e-11
+    assert histories["SV"][-1] < 1.0e-11
+
+
+def test_complete_far_field_converges_and_rotates() -> None:
+    beta = np.linspace(-np.pi, np.pi, 181, endpoint=False)
+    guided = elastic_sdh_modal_scattering(
+        FREQUENCY_HZ, RADIUS_M, MATERIAL, 0.2, beta, 20
+    )
+    reference = elastic_sdh_modal_scattering(
+        FREQUENCY_HZ, RADIUS_M, MATERIAL, 0.2, beta, 24
+    )
+    relative_error = np.linalg.norm(
+        guided.raw_far_field_potential - reference.raw_far_field_potential
+    ) / np.linalg.norm(reference.raw_far_field_potential)
+    assert relative_error < 1.0e-9
+    rotation = 0.61
+    rotated = elastic_sdh_modal_scattering(
+        FREQUENCY_HZ, RADIUS_M, MATERIAL, 0.2 + rotation, beta + rotation, 24
+    )
+    assert np.allclose(
+        reference.raw_far_field_potential,
+        rotated.raw_far_field_potential,
+        rtol=1.0e-11,
+        atol=1.0e-11,
+    )
+
+
+def test_flux_normalization_cross_sections_and_reversed_ray_reciprocity() -> None:
+    alpha = -0.31
+    for beta in (-1.2, 0.4, 1.7):
+        forward = elastic_sdh_modal_scattering(
+            FREQUENCY_HZ, RADIUS_M, MATERIAL, alpha, np.array([beta]), 24
+        )
+        reversed_rays = elastic_sdh_modal_scattering(
+            FREQUENCY_HZ,
+            RADIUS_M,
+            MATERIAL,
+            beta + np.pi,
+            np.array([alpha + np.pi]),
+            24,
+        )
+        assert normalized_modal_reciprocity_error(
+            forward, reversed_rays, MATERIAL
+        ) < 1.0e-11
+        assert np.allclose(
+            forward.differential_cross_section_m,
+            np.abs(forward.flux_far_field_sqrt_m) ** 2,
+        )
+        assert np.allclose(
+            np.sum(forward.angular_scattered_power_fraction, axis=0), 1.0
+        )
+
+
+def test_complete_modal_broadband_shape_and_validation() -> None:
+    result = elastic_sdh_modal_broadband_scattering(
+        np.array([0.0, 4.5e6, 5.0e6]),
+        RADIUS_M,
+        MATERIAL,
+        np.array([0.0, 0.4]),
+        np.array([-1.0, 0.0, 1.0]),
+        24,
+    )
+    assert result.raw_far_field_potential.shape == (3, 2, 2, 2, 3)
+    assert result.flux_far_field_sqrt_m.shape == (3, 2, 2, 2, 3)
+    assert np.all(result.raw_far_field_potential[0] == 0.0)
+    assert result.maximum_energy_balance_error < 1.0e-12
+    assert result.maximum_reciprocity_error < 1.0e-12
+    assert result.maximum_normalized_boundary_residual < 1.0e-10
