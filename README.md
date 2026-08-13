@@ -40,9 +40,10 @@ Tasks:
   points, places the same pulse at every boundary travel time, and coherently
   sums the contributions with equal weights `1/M`.
 - **M2-2D — analytical elastic SDH:** exact plane-strain P--SV scattering by a
-  traction-free circular cavity. The first idealized array model uses its
-  P-to-P response with phase-only propagation; P-to-SV is retained but is not
-  added to the measured trace without an SV receive model.
+  traction-free circular cavity. Its complete ideal-wavefield matrix contains
+  P→P, P→SV, SV→P, and SV→SV responses, with energy-flux normalization,
+  mode-dependent propagation, and separate modal TFM images. These modes are
+  deliberately not combined into a predicted probe-voltage signal.
 
 The canonical M0/M1 implementations are in `src/models/point_reflector.py` and
 `src/models/boundary_circle.py`. The M2-2D array interface is in
@@ -77,10 +78,16 @@ cylindrical scattering coefficients are also absent. See
 - `data/synthetic/elastic_sdh/M2_2D_elastic_sdh_fmc.npz`: M2-2D LL FMC,
   complex spectrum, retained P-to-SV kernel, geometry, material parameters, and
   TFM image;
+- `data/synthetic/elastic_sdh/multimode/M2_2D_multimode_fmc.npz`: separate PP,
+  PS, SP, and SS ideal-wavefield FMC arrays and spectra on a 31.98 µs record;
 - `results/comparisons/M0_M1_M2/`: single-frequency scattering patterns,
   coefficient and convergence diagnostics, M0/M1/M2/experimental A-scans and
   spectra, arrival/RMS maps, TFM images, width/localization metrics, and radius
   studies;
+- `results/comparisons/M2_multimode/`: full modal scattering patterns,
+  flux/cross-section diagnostics, traction/reciprocity/energy validation,
+  modal FMC and TFM figures, wrong-delay imaging, radius sweep, and a
+  reproducible audit of the experimental MAT file;
 - `data/processed/experimental_tfm.npz`: tx/rx-indexed experimental FMC and TFM
   result.
 
@@ -100,6 +107,8 @@ python scripts/04_experimental_tfm.py
 python scripts/05_compare_synthetic_experimental.py
 python scripts/06_compare_point_circular_reflector.py
 python scripts/07_compare_m0_m1_m2.py
+python scripts/08_m2_multimode.py
+python scripts/09_audit_experimental_mat.py
 ```
 
 The analytical conventions and derivation are in
@@ -108,10 +117,22 @@ The analytical conventions and derivation are in
 positive-frequency synthesis sign, so the array model performs an explicit
 conjugation at that interface.
 
-M2-2D is not the complete Boström--Bövik finite-probe, three-dimensional
-measurement model. It omits the general `h != 0` T-matrix, finite-aperture probe
-spectrum, Auld electromechanical reception, SH coupling, surface multiple
-scattering, and calibrated voltage amplitude.
+M2-2D is a complete **two-dimensional P--SV cavity scattering and modal
+propagation model**, but not the complete Boström--Bövik finite-probe,
+three-dimensional measurement model. It omits the general `h != 0` T-matrix,
+finite-aperture probe spectrum, Auld electromechanical reception, SH coupling,
+surface multiple scattering, and calibrated voltage amplitude. Its four FMCs
+assume `H_tx=H_rx=1` and are ideal elastic wavefield responses.
+
+The experimental MAT file contains a complete 64×64, 50 MHz FMC but only a
+19.98 µs record. It stores `c_p=6300 m/s` but no `c_s`, has exactly 256
+amplitude levels with occupied endpoints (consistent with normalized 8-bit
+clipped data), and has substantial per-transmitter RMS variation. Its echo-gated
+spectrum peaks near 5.85 MHz rather than exactly at the nominal 5 MHz. These
+facts motivate pulse/transfer-function calibration, lower-gain higher-bit-depth
+reacquisition, time-zero calibration, measured material properties, and a
+record of at least 32–35 µs before experimental converted-mode validation. See
+[`experimental_mat_audit.md`](results/comparisons/M2_multimode/validation/experimental_mat_audit.md).
 
 Deliverables:
 - Array/defect geometry plot.
@@ -203,8 +224,10 @@ Possible extensions:
 
 ## Next milestone
 
-Add finite-aperture transmit/receive transfer functions and validated
-propagation spreading to M2-2D before attempting the general `h != 0` T-matrix.
+Calibrate the measured pulse, time zero, per-element response, and actual block
+properties, then add finite-aperture transmit/receive transfer functions and
+validated propagation spreading. Keep the four modal wavefields separate until
+receive polarization and electromechanical voltage conversion are defined.
 
 ## Suggested project structure
 
@@ -226,5 +249,6 @@ ultrasonic-forward-model/
 │   └── elastic_sdh/
 ├── results/comparisons/M0_point_vs_M1_boundary/
 ├── results/comparisons/M0_M1_M2/
+├── results/comparisons/M2_multimode/
 └── README.md
 

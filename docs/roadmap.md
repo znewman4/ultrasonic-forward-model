@@ -30,8 +30,9 @@
 - [ ] Geometric spreading and element directivity
 - [ ] Material attenuation
 - [x] Frequency-dependent elastic SDH scattering in M2-2D
-- [x] Compute P-to-SV mode conversion in the M2-2D kernel
-- [ ] Add an explicit SV propagation and receive-polarization model
+- [x] Complete the energy-normalized P--SV scattering matrix
+- [x] Add separate P/SV propagation and mode-aware TFM
+- [ ] Add finite-aperture transmit and receive-polarization transfer functions
 
 ## Model M2: analytical elastic SDH
 
@@ -42,10 +43,18 @@
 - [x] Implement and test regular/outgoing cylindrical functions and derivatives
 - [x] Derive and separately test P and SV boundary traction operators
 - [x] Solve each traction-free 2 x 2 harmonic system without explicit inversion
-- [x] Define asymptotic potential-amplitude `F_PP` and `F_PS`
-- [x] Validate both boundary tractions, convergence, rotation, P--P reversal, and radius sensitivity
+- [x] Define all raw potential amplitudes `F_PP`, `F_PS`, `F_SP`, and `F_SS`
+- [x] Add incident SV harmonics through the same traction-free systems
+- [x] Add energy-flux amplitudes, differential cross-sections, and conversion fractions
+- [x] Validate both boundary tractions for P/SV incidence, convergence, rotation, normalized reciprocity, and partial-wave energy conservation
 - [x] Couple the verified P--P kernel to the existing pulse with an explicit FFT conversion
-- [x] Retain the P-to-SV kernel for a later polarization-aware receive model
+- [x] Generate separate PP, PS, SP, and SS FMCs with mode-dependent delays
+- [x] Generate mode-aware TFM images and demonstrate PS defocusing with PP delays
+- [x] Extend the synthetic record to 31.98 µs and limit experimental comparison to PP
+- [x] Run and document a read-only experimental MAT-file accuracy audit
 - [x] Generate M0/M1/M2 synthetic, TFM, radius, and experimental comparisons
+- [ ] Reacquire a ≥32–35 µs, lower-gain, higher-bit-depth experimental record
+- [ ] Measure actual-block `c_s`, density, attenuation, and time zero
+- [ ] Calibrate complex pulse/electronics and per-element transfer functions
 - [ ] Implement the general `h != 0` 3D T-matrix using the Olsson (1994) entries
 - [ ] Add the paper's finite-probe spectrum and Auld electromechanical receive model

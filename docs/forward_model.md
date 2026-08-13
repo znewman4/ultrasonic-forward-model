@@ -10,7 +10,7 @@ as compatibility aliases.
 
 Model M2-2D is the exact plane-strain P--SV solution for a traction-free circular
 cavity. Its cylindrical-wave kernel is in `src/scattering/elastic_sdh.py`; its
-first idealized LL array coupling is in `src/models/elastic_sdh.py`. The full
+idealized modal array coupling is in `src/models/elastic_sdh.py`. The full
 derivation and convention boundary are documented in
 [`m2_conventions.md`](m2_conventions.md).
 
@@ -147,19 +147,49 @@ with coefficients
 a_n=i^n\exp(-in\alpha).
 \]
 
-Scattered P and SV potentials use coefficients `A_m` and `B_m` multiplying
-`H_m^(1)(k_p r)` and `H_m^(1)(k_s r)`. At every harmonic, the two unknowns are
-found from the two traction-free equations `sigma_rr=0` and `sigma_rphi=0`.
-Far-field functions `F_PP` and `F_PS` are defined directly from the Hankel
-asymptotic; they are potential amplitudes, not probe voltage or energy-flux
-coefficients.
+Scattered P and SV potentials use coefficients multiplying
+`H_m^(1)(k_p r)` and `H_m^(1)(k_s r)`. Regular incident P and SV columns use
+`J_m(k_p r)` and `J_m(k_s r)`, respectively. For every harmonic, one outgoing
+P/SV pair is solved for each incident mode using the same two traction-free
+equations `sigma_rr=0` and `sigma_rphi=0`. With outgoing rows and incident
+columns, the result is
 
-The first array model evaluates `F_PP(beta_j,alpha_i,omega)`, multiplies by the
-existing pulse spectrum, and applies phase-only centre-path propagation. NumPy
-`irfft` uses `exp(+i omega t)` synthesis, so the paper-convention response is
-conjugated at the FFT boundary. `H_tx=H_rx=1`. `F_PS` is retained but not added
-to the trace because no SV propagation and receive-polarization model has been
-defined.
+\[
+\mathbf F=\begin{bmatrix}F_{PP}&F_{SP}\\F_{PS}&F_{SS}\end{bmatrix}.
+\]
+
+The raw functions are potential coefficients. For incident mode `a`, the
+physically comparable amplitude is
+
+\[
+F^{flux}_{ba}=\sqrt{\frac{2}{\pi k_a}}F^{raw}_{ba},\qquad
+\frac{d\sigma_{ba}}{d\beta}=|F^{flux}_{ba}|^2.
+\]
+
+Raw values remain in the API for debugging. The code tests the exact
+partial-wave scattering matrix for unitarity and the normalized full far field
+for reversed-ray reciprocity.
+
+The modal array model evaluates each matrix entry, multiplies by the existing
+pulse spectrum, and applies phase-only centre-path propagation. NumPy `irfft`
+uses `exp(+i omega t)` synthesis, so the paper-convention response is conjugated
+at the FFT boundary. With `r_i` and `r_j` the cavity-centre distances,
+
+\[
+\begin{aligned}
+\tau_{PP}&=r_i/c_p+r_j/c_p,&
+\tau_{PS}&=r_i/c_p+r_j/c_s,\\
+\tau_{SP}&=r_i/c_s+r_j/c_p,&
+\tau_{SS}&=r_i/c_s+r_j/c_s.
+\end{aligned}
+\]
+
+The outputs `fmc_pp`, `fmc_ps`, `fmc_sp`, and `fmc_ss` remain separate and use
+`H_tx=H_rx=1`. They are ideal elastic wavefield responses, not calibrated probe
+voltages. The time record is 31.98 µs so the slower modes do not wrap or
+truncate. Mode-aware TFM applies the corresponding transmit and receive speeds;
+the analysis also focuses PS data with PP delays to demonstrate severe
+mislocalization from the wrong propagation model.
 
 The unsupported general `h != 0` T-matrix remains guarded because the paper
 refers its explicit entries to Olsson (1994). M2-2D also omits finite aperture,
@@ -170,11 +200,18 @@ scattering, attenuation, directivity, spreading, and calibrated voltage.
 
 - one M0 point, M1 circular boundary, or M2-2D circular cavity in an x-z plane;
 - measured element-centre geometry with all elements at $z=0$;
-- straight longitudinal-wave paths through homogeneous aluminium at 6300 m/s;
+- straight modal centre paths through homogeneous aluminium, using 6300 m/s
+  for P and an assumed 3100 m/s for SV in the current study;
 - one Gaussian-windowed 5 MHz sinusoid for every element pair;
-- constant amplitude $A=1$ for M0/M1; uncalibrated potential-amplitude
-  scattering for M2-2D;
+- constant amplitude $A=1$ for M0/M1; uncalibrated potential-amplitude and
+  flux-normalized scattering for M2-2D;
 - no geometric spreading, directivity, attenuation, probe/electronics response,
   noise, or boundary reflections in the first array couplings;
 - experimental comparison targets timing and localization, not amplitude
   fidelity.
+
+The supplied experiment lasts 19.98 µs, has exactly 256 stored amplitude
+levels, and contains no stored shear speed. Consequently, the multimode study
+compares PP only: representative converted/shear arrivals occur around 21.3 and
+25.5 µs. The experimental audit and its acquisition recommendations are saved
+under `results/comparisons/M2_multimode/validation/`.

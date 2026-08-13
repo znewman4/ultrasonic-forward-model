@@ -28,6 +28,36 @@ def tfm_image(
     Returns:
         Image with shape ``(len(z_grid_m), len(x_grid_m))``.
     """
+    return tfm_image_mode_pair(
+        fmc_data,
+        time_s,
+        element_coordinates,
+        x_grid_m,
+        z_grid_m,
+        wave_speed_m_s,
+        wave_speed_m_s,
+        pixel_chunk_size=pixel_chunk_size,
+    )
+
+
+def tfm_image_mode_pair(
+    fmc_data: ArrayLike,
+    time_s: ArrayLike,
+    element_coordinates: ArrayLike,
+    x_grid_m: ArrayLike,
+    z_grid_m: ArrayLike,
+    transmit_wave_speed_m_s: float,
+    receive_wave_speed_m_s: float,
+    *,
+    pixel_chunk_size: int = 128,
+) -> FloatArray:
+    """Form TFM using independent transmit and receive modal speeds.
+
+    For a path labelled ``AB``, pass the speed of incident/transmit mode ``A``
+    and outgoing/receive mode ``B``. The delay is
+    ``distance_i/c_A + distance_j/c_B``. When both speeds are equal this is
+    exactly the legacy :func:`tfm_image` calculation.
+    """
     fmc = np.asarray(fmc_data)
     time = np.asarray(time_s, dtype=float)
     elements = np.asarray(element_coordinates, dtype=float)
@@ -47,11 +77,17 @@ def tfm_image(
     if not np.all(np.isfinite(x_grid)) or not np.all(np.isfinite(z_grid)):
         raise ValueError("imaging grids must contain finite values")
     try:
-        speed = float(wave_speed_m_s)
+        transmit_speed = float(transmit_wave_speed_m_s)
+        receive_speed = float(receive_wave_speed_m_s)
     except (TypeError, ValueError) as exc:
-        raise ValueError("wave_speed_m_s must be positive and finite") from exc
-    if not np.isfinite(speed) or speed <= 0.0:
-        raise ValueError("wave_speed_m_s must be positive and finite")
+        raise ValueError("transmit and receive wave speeds must be positive and finite") from exc
+    if (
+        not np.isfinite(transmit_speed)
+        or transmit_speed <= 0.0
+        or not np.isfinite(receive_speed)
+        or receive_speed <= 0.0
+    ):
+        raise ValueError("transmit and receive wave speeds must be positive and finite")
     if not isinstance(pixel_chunk_size, int) or pixel_chunk_size <= 0:
         raise ValueError("pixel_chunk_size must be a positive integer")
 
@@ -67,8 +103,9 @@ def tfm_image(
             pixels[start:stop, np.newaxis, :] - elements[np.newaxis, :, :], axis=2
         )
         delays = (
-            distances[:, :, np.newaxis] + distances[:, np.newaxis, :]
-        ).reshape(stop - start, n * n) / speed
+            distances[:, :, np.newaxis] / transmit_speed
+            + distances[:, np.newaxis, :] / receive_speed
+        ).reshape(stop - start, n * n)
         upper = np.searchsorted(time, delays, side="right")
         valid = (delays >= time[0]) & (delays <= time[-1])
         upper = np.clip(upper, 1, nt - 1)

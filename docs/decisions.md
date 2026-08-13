@@ -93,15 +93,42 @@ uses the paper's `exp(-iωt)`. At the separate NumPy `irfft` boundary the comple
 response is conjugated, because NumPy synthesizes positive frequencies using
 `exp(+iωt)`.
 
-The far-field outputs are explicitly defined potential-amplitude functions
-from the Hankel asymptotic. They are deliberately named `F_PP` and `F_PS`, not
-calibrated scattering or voltage coefficients. The first FMC uses P-to-P only,
-phase-only centre propagation, and `H_tx=H_rx=1`; P-to-SV is saved for a later
-SV propagation and receive-polarization model.
+The raw far-field outputs are explicitly defined potential-amplitude functions
+from the Hankel asymptotic. The completed matrix uses rows for the outgoing mode
+and columns for the incident mode,
+`[[F_PP,F_SP],[F_PS,F_SS]]`. Regular incident SV harmonics use the same
+traction-free systems as incident P. Raw coefficients remain available for
+debugging, but comparisons use the flux amplitude
+`F_flux_ba=sqrt(2/(pi*k_a))*F_raw_ba`, whose squared magnitude is the
+differential scattering cross-section. The exact partial-wave scattering
+matrix is unitary; this, rather than a finite “fraction” of an infinite plane
+wave, is the lossless energy-balance test.
+
+Separate PP, PS, SP, and SS ideal-wavefield FMCs use the appropriate P or SV
+speed on each leg and `H_tx=H_rx=1`. They are not summed because no
+polarization-dependent probe transfer function has yet been defined. Separate
+modal TFM delay laws are used, and imaging PS with PP delays is retained as an
+intentional negative control.
 
 Completion is based on numerical boundary-value evidence: both tractions
-decrease with harmonic order, the far-field series converges, circular rotation
-and the derived P--P reversed-ray relation hold, and the FFT record has an
+decrease with harmonic order for both incident modes, the far-field series
+converges, circular rotation and normalized modal reversed-ray reciprocity hold,
+the partial-wave scattering matrix conserves energy, and the FFT record has an
 explicit no-wrap guard. The comparison remains separately normalized against
 experiment because aperture, spreading, receiver/electronics transfer, and
 absolute calibration are not yet present.
+
+## Treat the experimental MAT file as an acquisition needing calibration
+
+The acquisition is used as evidence, not as automatically trustworthy ground
+truth. A reproducible audit finds 256 amplitude levels, occupied extrema,
+19.98 µs duration, substantial transmitter RMS variation, and an echo-gated
+power peak near 5.85 MHz. Only `c_p=6300 m/s` is stored; `c_s`, density,
+attenuation, time zero, verified hole geometry, gain/filter settings, probe
+aperture definitions, and per-channel transfer functions are absent.
+
+Therefore only PP is compared experimentally in the multimode milestone. PS
+and SS validation is not claimed because their predicted arrivals reach or
+exceed the record end. The next accuracy work is measurement calibration and a
+longer, lower-gain, higher-bit-depth acquisition, not tuning ideal cavity
+coefficients to compensate for unmodelled probe/electronics physics.
