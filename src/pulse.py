@@ -86,3 +86,33 @@ def shifted_pulse(
     return gaussian_pulse(
         time, centre_frequency_hz, sigma_s, centre_time_s=arrival_time
     )
+
+
+def gaussian_pulse_spectrum(
+    n_samples: int,
+    sample_interval_s: float,
+    centre_frequency_hz: float,
+    sigma_s: float,
+) -> tuple[FloatArray, NDArray[np.complex128]]:
+    """Return ``(frequency_hz, P)`` for the zero-centred Gaussian pulse.
+
+    ``P`` is the NumPy ``rfft`` of :func:`gaussian_pulse` sampled on a periodic
+    lag grid ``[0, dt, ..., -2dt, -dt]``, so the pulse is centred at ``t = 0``
+    and ``P`` is (to numerical precision) real. A delay ``tau`` is then applied
+    in the frequency domain as ``P(omega) * exp(-i*omega*tau)`` and ``irfft``
+    recovers ``p(t - tau)``. This sign follows NumPy's ``exp(+i*omega*t)``
+    synthesis convention, which is the convention of the frequency-domain
+    pulse ``exp(-i*omega*(d_tx + d_rx)/c_L)`` used by the ray models.
+    """
+    if (
+        not isinstance(n_samples, (int, np.integer))
+        or isinstance(n_samples, (bool, np.bool_))
+        or n_samples < 2
+    ):
+        raise ValueError("n_samples must be an integer >= 2")
+    dt = _positive_finite(sample_interval_s, "sample_interval_s")
+    indices = np.arange(n_samples)
+    signed_indices = np.where(indices <= n_samples // 2, indices, indices - n_samples)
+    pulse = gaussian_pulse(signed_indices * dt, centre_frequency_hz, sigma_s)
+    frequency = np.fft.rfftfreq(n_samples, dt)
+    return frequency, np.asarray(np.fft.rfft(pulse), dtype=complex)

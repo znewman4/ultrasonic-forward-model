@@ -14,14 +14,14 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 try:
-    from ..pulse import gaussian_pulse
+    from ..pulse import gaussian_pulse_spectrum
     from ..scattering.elastic_sdh import (
         ElasticMaterial,
         elastic_sdh_scattering,
         recommended_n_max,
     )
 except ImportError:  # Supports importing when ``src`` is directly on sys.path.
-    from pulse import gaussian_pulse
+    from pulse import gaussian_pulse_spectrum
     from scattering.elastic_sdh import (
         ElasticMaterial,
         elastic_sdh_scattering,
@@ -101,11 +101,7 @@ def _zero_centred_pulse_spectrum(
     sigma_s: float,
 ) -> ComplexArray:
     """DFT of the existing pulse centred at zero on a periodic lag grid."""
-    indices = np.arange(n_samples)
-    signed_indices = np.where(indices <= n_samples // 2, indices, indices - n_samples)
-    lag_s = signed_indices * dt_s
-    pulse = gaussian_pulse(lag_s, centre_frequency_hz, sigma_s)
-    return np.asarray(np.fft.rfft(pulse), dtype=complex)
+    return gaussian_pulse_spectrum(n_samples, dt_s, centre_frequency_hz, sigma_s)[1]
 
 
 def simulate_elastic_sdh_fmc(

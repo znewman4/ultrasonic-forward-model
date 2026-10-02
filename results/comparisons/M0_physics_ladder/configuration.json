@@ -1,0 +1,49 @@
+{
+  "reflector_m": [
+    0.0,
+    0.04
+  ],
+  "wave_speed_m_s": 6300.0,
+  "centre_frequency_hz": 5000000.0,
+  "sigma_s": 3.5e-07,
+  "element_width_m_from_mat_corners": 0.0005299999999999992,
+  "element_pitch_m": 0.0006299999999999986,
+  "a_over_lambda_at_f0": 0.42063492063492,
+  "maximum_ray_angle_deg": 26.38715909859658,
+  "attenuation_db_per_m_at_f0": 10.0,
+  "attenuation_np_per_m_at_f0": 1.151292546497023,
+  "attenuation_frequency_exponent": 1.0,
+  "attenuation_status": "illustrative placeholder, not measured on this specimen",
+  "spreading_reference_amplitude_m": 1.0,
+  "gate_s": [
+    1e-05,
+    1.65e-05
+  ],
+  "ladder": [
+    {
+      "label": "M0",
+      "domain": "time",
+      "description": "timing only"
+    },
+    {
+      "label": "M0-TD+",
+      "domain": "time",
+      "description": "timing + spreading + frequency-independent attenuation"
+    },
+    {
+      "label": "M0-FD",
+      "domain": "frequency",
+      "description": "M0-TD+ synthesized in frequency"
+    },
+    {
+      "label": "M0-FD+D",
+      "domain": "frequency",
+      "description": "+ frequency-dependent element directivity"
+    },
+    {
+      "label": "M0-FD+D+A",
+      "domain": "frequency",
+      "description": "+ frequency-dependent attenuation"
+    }
+  ]
+}

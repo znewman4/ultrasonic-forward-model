@@ -175,6 +175,8 @@ scattering, attenuation, directivity, spreading, and calibrated voltage.
 - constant amplitude $A=1$ for M0/M1; uncalibrated potential-amplitude
   scattering for M2-2D;
 - no geometric spreading, directivity, attenuation, probe/electronics response,
-  noise, or boundary reflections in the first array couplings;
+  noise, or boundary reflections in the first array couplings (the M0 physics
+  ladder adds spreading, directivity and attenuation to M0 only; see
+  [`propagation_physics.md`](propagation_physics.md));
 - experimental comparison targets timing and localization, not amplitude
   fidelity.

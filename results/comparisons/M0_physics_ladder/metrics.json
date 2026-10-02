@@ -1,0 +1,270 @@
+{
+  "configuration": {
+    "reflector_m": [
+      0.0,
+      0.04
+    ],
+    "wave_speed_m_s": 6300.0,
+    "centre_frequency_hz": 5000000.0,
+    "sigma_s": 3.5e-07,
+    "element_width_m_from_mat_corners": 0.0005299999999999992,
+    "element_pitch_m": 0.0006299999999999986,
+    "a_over_lambda_at_f0": 0.42063492063492,
+    "maximum_ray_angle_deg": 26.38715909859658,
+    "attenuation_db_per_m_at_f0": 10.0,
+    "attenuation_np_per_m_at_f0": 1.151292546497023,
+    "attenuation_frequency_exponent": 1.0,
+    "attenuation_status": "illustrative placeholder, not measured on this specimen",
+    "spreading_reference_amplitude_m": 1.0,
+    "gate_s": [
+      1e-05,
+      1.65e-05
+    ],
+    "ladder": [
+      {
+        "label": "M0",
+        "domain": "time",
+        "description": "timing only"
+      },
+      {
+        "label": "M0-TD+",
+        "domain": "time",
+        "description": "timing + spreading + frequency-independent attenuation"
+      },
+      {
+        "label": "M0-FD",
+        "domain": "frequency",
+        "description": "M0-TD+ synthesized in frequency"
+      },
+      {
+        "label": "M0-FD+D",
+        "domain": "frequency",
+        "description": "+ frequency-dependent element directivity"
+      },
+      {
+        "label": "M0-FD+D+A",
+        "domain": "frequency",
+        "description": "+ frequency-dependent attenuation"
+      }
+    ]
+  },
+  "td_plus_vs_fd_max_relative_error": 8.540940083332236e-14,
+  "directivity_frequency_dependence": {
+    "fmc_relative_l2_difference": 0.006206817845256301,
+    "tfm_relative_l2_difference_after_normalising": 0.004903211648336347
+  },
+  "steps": {
+    "M0": {
+      "domain": "time",
+      "description": "timing only",
+      "runtime_s": 0.13863950000086334,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -0.0007261331515120842,
+      "edge_pitch_catch_to_centre_amplitude_db": -0.0007261331515120842,
+      "aperture_amplitude_dynamic_range_db": 0.0035365095201823375,
+      "central_pulse_echo_centroid_mhz": 4.999999999999998,
+      "edge_pulse_echo_centroid_mhz": 5.0,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9698742851952072,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 6.129610032604702,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.2223823571667747,
+        "axial_minus_6_db_width_mm": 0.2998001387337218
+      }
+    },
+    "M0-TD+": {
+      "domain": "time",
+      "description": "timing + spreading + frequency-independent attenuation",
+      "runtime_s": 0.1442425999994157,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -1.049145560040152,
+      "edge_pitch_catch_to_centre_amplitude_db": -1.049145560040152,
+      "aperture_amplitude_dynamic_range_db": 1.049145560040153,
+      "central_pulse_echo_centroid_mhz": 4.999999999999997,
+      "edge_pulse_echo_centroid_mhz": 4.999999999999999,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9698026133388125,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 5.887867063149663,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.2325112178134598,
+        "axial_minus_6_db_width_mm": 0.3003072467880827
+      },
+      "change_vs_previous_rung": {
+        "previous": "M0",
+        "fmc_cosine_similarity": 0.999651261629865,
+        "fmc_relative_l2_difference_after_normalising": 0.04879616691720846,
+        "tfm_relative_l2_difference_after_normalising": 0.011323565781213681
+      }
+    },
+    "M0-FD": {
+      "domain": "frequency",
+      "description": "M0-TD+ synthesized in frequency",
+      "runtime_s": 0.1192698000013479,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -1.0491455600402,
+      "edge_pitch_catch_to_centre_amplitude_db": -1.0491455600402,
+      "aperture_amplitude_dynamic_range_db": 1.049145560040199,
+      "central_pulse_echo_centroid_mhz": 4.999999999999999,
+      "edge_pulse_echo_centroid_mhz": 4.999999999999999,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9698026133388123,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 5.887867063149655,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.2325112178134585,
+        "axial_minus_6_db_width_mm": 0.3003072467880827
+      },
+      "change_vs_previous_rung": {
+        "previous": "M0-TD+",
+        "fmc_cosine_similarity": 0.9999999999999999,
+        "fmc_relative_l2_difference_after_normalising": 5.241879519957034e-14,
+        "tfm_relative_l2_difference_after_normalising": 4.219692553557529e-14
+      }
+    },
+    "M0-FD+D": {
+      "domain": "frequency",
+      "description": "+ frequency-dependent element directivity",
+      "runtime_s": 0.12204180000117049,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -2.0660984788725365,
+      "edge_pitch_catch_to_centre_amplitude_db": -2.0660984788725365,
+      "aperture_amplitude_dynamic_range_db": 2.066098478872536,
+      "central_pulse_echo_centroid_mhz": 4.999997014408311,
+      "edge_pulse_echo_centroid_mhz": 4.990280950658171,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9690388990503453,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 5.668097451241111,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.2433997872547997,
+        "axial_minus_6_db_width_mm": 0.3002443191734219
+      },
+      "change_vs_previous_rung": {
+        "previous": "M0-FD",
+        "fmc_cosine_similarity": 0.9996540055512714,
+        "fmc_relative_l2_difference_after_normalising": 0.04786397540886796,
+        "tfm_relative_l2_difference_after_normalising": 0.010294826027040559
+      }
+    },
+    "M0-FD+D+A": {
+      "domain": "frequency",
+      "description": "+ frequency-dependent attenuation",
+      "runtime_s": 0.13256250000267755,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -2.064288296111612,
+      "edge_pitch_catch_to_centre_amplitude_db": -2.064288296111612,
+      "aperture_amplitude_dynamic_range_db": 2.064288296111611,
+      "central_pulse_echo_centroid_mhz": 4.996187908420139,
+      "edge_pulse_echo_centroid_mhz": 4.986037610102115,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9690407578160941,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 5.668443419517771,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.244326781890911,
+        "axial_minus_6_db_width_mm": 0.29960984683446296
+      },
+      "change_vs_previous_rung": {
+        "previous": "M0-FD+D",
+        "fmc_cosine_similarity": 0.9999810939556394,
+        "fmc_relative_l2_difference_after_normalising": 0.006149737057462606,
+        "tfm_relative_l2_difference_after_normalising": 0.0059142887922869055
+      }
+    },
+    "M0-TD+D(f0)": {
+      "domain": "time",
+      "description": "M0-TD+ with directivity frozen at the centre frequency",
+      "runtime_s": 0.13882130000274628,
+      "max_reciprocity_error_relative": 0.0,
+      "edge_to_centre_pulse_echo_amplitude_db": -2.059235032799363,
+      "edge_pitch_catch_to_centre_amplitude_db": -2.059235032799363,
+      "aperture_amplitude_dynamic_range_db": 2.0592350327993634,
+      "central_pulse_echo_centroid_mhz": 4.999999999999998,
+      "edge_pulse_echo_centroid_mhz": 5.0,
+      "amplitude_map_cosine_vs_experiment_live_pairs": 0.9690467249180023,
+      "amplitude_map_rms_db_error_vs_experiment_live_pairs": 5.669665166974471,
+      "tfm": {
+        "peak_m": [
+          0.0,
+          0.04
+        ],
+        "localisation_error_mm": 0.0,
+        "lateral_minus_6_db_width_mm": 1.2424435617740526,
+        "axial_minus_6_db_width_mm": 0.30079781178514453
+      }
+    }
+  },
+  "experiment": {
+    "dead_or_weak_channels": [
+      4,
+      40,
+      46,
+      52
+    ],
+    "tfm": {
+      "peak_m": [
+        0.0,
+        0.0404
+      ],
+      "localisation_error_mm": 0.3999999999999976,
+      "lateral_minus_6_db_width_mm": 26.598445475682595,
+      "axial_minus_6_db_width_mm": 0.4059895940836111
+    },
+    "edge_to_centre_pulse_echo_amplitude_db": 3.8543429469970802,
+    "edge_pitch_catch_to_centre_amplitude_db": -2.964543939454647
+  },
+  "attenuation_sweep": {
+    "attenuation_db_per_m_at_5mhz": [
+      0.0,
+      10.0,
+      50.0,
+      200.0,
+      1000.0
+    ],
+    "central_centroid_shift_khz": [
+      0.0,
+      -3.80910598817002,
+      -19.04552994085569,
+      -76.18211976344232,
+      -380.9105988175059
+    ],
+    "edge_to_centre_amplitude_change_db": [
+      0.0,
+      -0.09121014461161447,
+      -0.45456649515026015,
+      -1.7960023841785135,
+      -8.38629291689804
+    ],
+    "tfm_lateral_width_mm": [
+      1.242503237669972,
+      1.244326781890911,
+      1.251612069324246,
+      1.2788413535076055,
+      1.4256061620290823
+    ],
+    "tfm_axial_width_mm": [
+      0.3001994654088444,
+      0.29960984683446296,
+      0.2972702833248936,
+      0.28875935229881466,
+      0.2495404887231517
+    ]
+  }
+}

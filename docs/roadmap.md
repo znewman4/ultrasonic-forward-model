@@ -27,8 +27,11 @@
 
 ## Later propagation and measurement improvements
 
-- [ ] Geometric spreading and element directivity
-- [ ] Material attenuation
+- [x] Geometric spreading and element directivity (M0 physics ladder)
+- [x] Material attenuation (power law; value still to be measured)
+- [x] Frequency-domain M0 synthesis validated against the time domain
+- [ ] Apply spreading/directivity to M1 boundary points and M2-2D centre paths
+- [ ] Measure specimen attenuation (e.g. from back-wall echoes)
 - [x] Frequency-dependent elastic SDH scattering in M2-2D
 - [x] Compute P-to-SV mode conversion in the M2-2D kernel
 - [ ] Add an explicit SV propagation and receive-polarization model

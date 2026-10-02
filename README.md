@@ -43,6 +43,13 @@ Tasks:
   traction-free circular cavity. The first idealized array model uses its
   P-to-P response with phase-only propagation; P-to-SV is retained but is not
   added to the measured trace without an SV receive model.
+- **M0 physics ladder:** M0 with Holmes et al. (2005) ray physics added one
+  effect at a time: M0-TD+ (2D spreading `A0/sqrt(d_tx d_rx)` + simple
+  attenuation), M0-FD (the same in the frequency domain), then
+  frequency-dependent element directivity `sinc(pi a sin(theta)/lambda)`, then
+  frequency-dependent attenuation. See
+  [`docs/propagation_physics.md`](docs/propagation_physics.md) and
+  `src/models/point_reflector_physics.py`.
 
 The canonical M0/M1 implementations are in `src/models/point_reflector.py` and
 `src/models/boundary_circle.py`. The M2-2D array interface is in
@@ -81,6 +88,8 @@ cylindrical scattering coefficients are also absent. See
   coefficient and convergence diagnostics, M0/M1/M2/experimental A-scans and
   spectra, arrival/RMS maps, TFM images, width/localization metrics, and radius
   studies;
+- `results/comparisons/M0_physics_ladder/`: per-rung amplitude maps, A-scans,
+  spectra, TFM images/profiles, attenuation sweep, and experiment comparison;
 - `data/processed/experimental_tfm.npz`: tx/rx-indexed experimental FMC and TFM
   result.
 
@@ -100,6 +109,7 @@ python scripts/04_experimental_tfm.py
 python scripts/05_compare_synthetic_experimental.py
 python scripts/06_compare_point_circular_reflector.py
 python scripts/07_compare_m0_m1_m2.py
+python scripts/08_compare_physics_ladder.py
 ```
 
 The analytical conventions and derivation are in
@@ -136,12 +146,12 @@ Deliverables:
 
 ### Stage 3 — Improved propagation model
 
-Add:
-- Geometric spreading.
-- Element directivity.
-- Attenuation.
-- Frequency-domain propagation.
-- Complex phase.
+Add (for the point reflector, see `docs/propagation_physics.md`):
+- [x] Geometric spreading.
+- [x] Element directivity.
+- [x] Attenuation (illustrative value; not yet measured on the specimen).
+- [x] Frequency-domain propagation.
+- [x] Complex phase.
 
 General model:
 D_ij(ω) = P(ω) G_i(ω) S(ω) G_j(ω)
