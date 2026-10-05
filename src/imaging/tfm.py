@@ -8,6 +8,22 @@ from numpy.typing import ArrayLike, NDArray
 FloatArray = NDArray[np.float64]
 
 
+def analytic_signal(data: ArrayLike) -> NDArray[np.complex128]:
+    """Analytic signal along the last axis, as in Bristol's BRAIN ``fn_fast_DAS``.
+
+    BRAIN (``ndtatbristol/brain1``) applies the Hilbert transform in the
+    frequency domain: keep spectrum bins ``k`` (1-based, as in MATLAB) with
+    ``k < Nt/2``, zero the rest (negative frequencies *and* Nyquist), inverse
+    transform and multiply by 2 (the GPU path of ``fn_fast_DAS3``). Unlike
+    ``scipy.signal.hilbert`` there is no special handling of the DC and Nyquist
+    bins, and no zero-padding to a power of two inside the delay-and-sum.
+    """
+    arr = np.asarray(data, dtype=float)
+    nt = arr.shape[-1]
+    keep = (np.arange(1, nt + 1) < nt / 2).astype(float)
+    return np.fft.ifft(np.fft.fft(arr, axis=-1) * keep, axis=-1) * 2.0
+
+
 def tfm_image(
     fmc_data: ArrayLike,
     time_s: ArrayLike,
@@ -17,13 +33,20 @@ def tfm_image(
     wave_speed_m_s: float,
     *,
     pixel_chunk_size: int = 128,
+    hilbert_on: bool = True,
 ) -> FloatArray:
-    """Form a TFM image by linearly interpolating and summing signed FMC data.
+    """Form a TFM image by linearly interpolating and summing FMC data.
 
     For every image pixel, samples are evaluated at the transmitter-pixel-
     receiver travel times. Values outside the recorded time interval contribute
-    zero. The coherent signed sum is returned as its absolute magnitude, without
+    zero. The coherent sum is returned as its absolute magnitude, without
     internal normalization.
+
+    With ``hilbert_on`` (default, as in Bristol's BRAIN ``focal_law.hilbert_on``)
+    each A-scan is converted to its analytic signal before delay-and-sum, so the
+    magnitude is the envelope image. With ``hilbert_on=False`` the real RF data
+    are summed, giving carrier fringes in the image. Complex ``fmc_data`` is
+    accepted and used as-is.
 
     Returns:
         Image with shape ``(len(z_grid_m), len(x_grid_m))``.
@@ -57,7 +80,9 @@ def tfm_image(
 
     xx, zz = np.meshgrid(x_grid, z_grid)
     pixels = np.column_stack((xx.ravel(), zz.ravel()))
-    traces = np.asarray(fmc).reshape(n * n, nt)
+    if hilbert_on and not np.iscomplexobj(fmc):
+        fmc = analytic_signal(fmc)
+    traces = fmc.reshape(n * n, nt)
     pair_indices = np.arange(n * n)[np.newaxis, :]
     image = np.empty(pixels.shape[0], dtype=float)
 

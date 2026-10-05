@@ -33,3 +33,23 @@ def test_tfm_localises_and_moves_with_reflector(x_m: float, z_m: float) -> None:
     assert np.all(np.isfinite(image))
     assert abs(X_GRID[peak_x_index] - x_m) <= 0.0005
     assert abs(Z_GRID[peak_z_index] - z_m) <= 0.0005
+
+
+def test_analytic_signal_matches_scipy_and_gives_envelope_image() -> None:
+    from scipy.signal import hilbert
+
+    from src.imaging.tfm import analytic_signal
+
+    t = np.arange(512) * 20e-9
+    sig = np.sin(2 * np.pi * 5e6 * t) * np.exp(-(((t - 5e-6) / 0.5e-6) ** 2))
+    ours = analytic_signal(sig)
+    assert np.allclose(ours.real, sig, atol=1e-9)
+    assert np.allclose(ours.imag, hilbert(sig).imag, atol=1e-6)
+
+    reflector = reflector_coordinate(PointReflector(x_m=0.0, z_m=0.04))
+    fmc, _ = simulate_point_reflector_fmc(TIME, ELEMENTS, reflector, 6300.0, 5e6, 0.35e-6)
+    env = tfm_image(fmc, TIME, ELEMENTS, X_GRID, Z_GRID, 6300.0)
+    rf = tfm_image(fmc, TIME, ELEMENTS, X_GRID, Z_GRID, 6300.0, hilbert_on=False)
+    assert env.max() >= rf.max() * 0.99  # envelope >= carrier-modulated magnitude
+    iz, ix = np.unravel_index(np.argmax(env), env.shape)
+    assert abs(X_GRID[ix]) <= 0.0005 and abs(Z_GRID[iz] - 0.04) <= 0.0005
