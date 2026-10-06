@@ -1,0 +1,298 @@
+{
+  "inputs": {
+    "thickness_mm": 49.40415357325027,
+    "A_bw": 0.3291858152751707,
+    "A0_mm": 9.503298263271349,
+    "bw_pulse": {
+      "f0_MHz": 6.048155207440557,
+      "sigma_ns": 105.47069358037973,
+      "phase_deg": -30.025141930522658,
+      "relative_residual": 0.3496304858508717,
+      "echoes": 32
+    },
+    "clipped_healthy_pulse_echo_traces": 23,
+    "attenuation": "off",
+    "round_trip_factor": 1.0
+  },
+  "back_wall_ridges": {
+    "BW1": {
+      "experiment": {
+        "peak": 684.5914509318634,
+        "z_mm": 49.28
+      },
+      "direct_only": {
+        "peak": 0.40852510924899166,
+        "z_mm": 46.56
+      },
+      "no_mixed_paths": {
+        "peak": 842.3472111654878,
+        "z_mm": 49.44
+      },
+      "full": {
+        "peak": 950.0287719139968,
+        "z_mm": 49.44
+      },
+      "full_over_exp_dB": 2.84610573588457
+    },
+    "BW2": {
+      "experiment": {
+        "peak": 454.02918125406933,
+        "z_mm": 98.72
+      },
+      "direct_only": {
+        "peak": 0.16468169545808004,
+        "z_mm": 101.76
+      },
+      "no_mixed_paths": {
+        "peak": 814.4184157626305,
+        "z_mm": 98.72
+      },
+      "full": {
+        "peak": 814.5828031311527,
+        "z_mm": 98.72
+      },
+      "full_over_exp_dB": 5.077029414378444
+    }
+  },
+  "sdh_ghost_images": [
+    {
+      "sdh": 1,
+      "expected_mm": [
+        -9.133797192060486,
+        64.78651379831953
+      ],
+      "experiment": {
+        "peak": 178.04844548714985,
+        "at_mm": [
+          -9.28499999999999,
+          63.84000000000001
+        ]
+      },
+      "no_mixed_paths": {
+        "peak": 443.48234312834705,
+        "at_mm": [
+          -9.12499999999999,
+          64.8
+        ]
+      },
+      "full": {
+        "peak": 443.7744983370521,
+        "at_mm": [
+          -9.12499999999999,
+          64.8
+        ]
+      },
+      "full_over_exp_dB": 7.932483109047464
+    },
+    {
+      "sdh": 2,
+      "expected_mm": [
+        0.5057678846948775,
+        69.66315872534373
+      ],
+      "experiment": {
+        "peak": 179.93761041205613,
+        "at_mm": [
+          0.31500000000001904,
+          68.64
+        ]
+      },
+      "no_mixed_paths": {
+        "peak": 412.9374396778853,
+        "at_mm": [
+          0.4750000000000192,
+          69.60000000000001
+        ]
+      },
+      "full": {
+        "peak": 412.78076717309295,
+        "at_mm": [
+          0.4750000000000192,
+          69.60000000000001
+        ]
+      },
+      "full_over_exp_dB": 7.211950103144936
+    },
+    {
+      "sdh": 3,
+      "expected_mm": [
+        10.408206161554466,
+        74.53382459048527
+      ],
+      "experiment": {
+        "peak": 156.13588823657147,
+        "at_mm": [
+          10.23500000000003,
+          73.44000000000001
+        ]
+      },
+      "no_mixed_paths": {
+        "peak": 387.4273951254582,
+        "at_mm": [
+          10.395000000000028,
+          74.56
+        ]
+      },
+      "full": {
+        "peak": 387.71381361596207,
+        "at_mm": [
+          10.395000000000028,
+          74.56
+        ]
+      },
+      "full_over_exp_dB": 7.900170724989238
+    },
+    {
+      "sdh": 4,
+      "expected_mm": [
+        19.72632427524384,
+        79.25351873421543
+      ],
+      "experiment": {
+        "peak": 130.28393498710204,
+        "at_mm": [
+          19.835000000000036,
+          78.56
+        ]
+      },
+      "no_mixed_paths": {
+        "peak": 344.4535919241953,
+        "at_mm": [
+          19.835000000000036,
+          79.2
+        ]
+      },
+      "full": {
+        "peak": 344.5740386019636,
+        "at_mm": [
+          19.835000000000036,
+          79.2
+        ]
+      },
+      "full_over_exp_dB": 8.44783371879976
+    }
+  ],
+  "background_arcs_region_z36_47mm": {
+    "experiment": {
+      "median_dB": -36.958325933490315,
+      "p99_dB": -31.33232410066146
+    },
+    "no_mixed_paths": {
+      "median_dB": -56.03162499593335,
+      "p99_dB": -42.55969102421887
+    },
+    "full": {
+      "median_dB": -50.91281268463806,
+      "p99_dB": -36.44695076288339
+    },
+    "direct_only": {
+      "median_dB": -59.81313722546622,
+      "p99_dB": -50.24618341278824
+    }
+  },
+  "background_z52_95mm": {
+    "experiment": {
+      "median_dB": -36.23961883860886,
+      "p99_dB": -22.330115314892605
+    },
+    "no_mixed_paths": {
+      "median_dB": -61.897299505250835,
+      "p99_dB": -28.19274177518247
+    },
+    "full": {
+      "median_dB": -55.30989631400451,
+      "p99_dB": -28.24737731580161
+    },
+    "direct_only": {
+      "median_dB": -69.53998917757659,
+      "p99_dB": -65.10997944113373
+    }
+  },
+  "log_image_correlation_z8_126mm": {
+    "direct_only": 0.14023428376851568,
+    "no_mixed_paths": 0.5661463999042485,
+    "full": 0.5673462660899541
+  },
+  "back_wall_pair_amplitudes": {
+    "BW1": {
+      "pairs_unclipped": 845,
+      "pairs_clipped_excluded": 695,
+      "median_exp_over_model_dB": -1.1330533304771024,
+      "robust_std_dB": 1.6818905168966036,
+      "by_dx_mm": [
+        {
+          "dx_mm": [
+            0,
+            10
+          ],
+          "median_dB": -0.9021198115308757
+        },
+        {
+          "dx_mm": [
+            10,
+            20
+          ],
+          "median_dB": -0.8600239543103014
+        },
+        {
+          "dx_mm": [
+            20,
+            30
+          ],
+          "median_dB": -1.8689148169828065
+        },
+        {
+          "dx_mm": [
+            30,
+            45
+          ],
+          "median_dB": -1.5074418567457537
+        }
+      ]
+    },
+    "BW2": {
+      "pairs_unclipped": 1520,
+      "pairs_clipped_excluded": 20,
+      "median_exp_over_model_dB": -3.6902701418046613,
+      "robust_std_dB": 2.6262160452635577,
+      "by_dx_mm": [
+        {
+          "dx_mm": [
+            0,
+            10
+          ],
+          "median_dB": -2.789475333354668
+        },
+        {
+          "dx_mm": [
+            10,
+            20
+          ],
+          "median_dB": -3.3190132396250065
+        },
+        {
+          "dx_mm": [
+            20,
+            30
+          ],
+          "median_dB": -4.720797580490977
+        },
+        {
+          "dx_mm": [
+            30,
+            45
+          ],
+          "median_dB": -6.412487189493577
+        }
+      ]
+    },
+    "echo2_over_echo1_pulse_echo": {
+      "observed": 0.5295716779197868,
+      "lossless_2D_model": 0.7069990404683499,
+      "observed_over_model_dB": -2.5098814774974834,
+      "implied_round_trip_factor": 0.749041579418514,
+      "equivalent_attenuation_dB_per_m_if_all_loss_is_attenuation": 25.4015229081513,
+      "note": "echo 1 is partly clipped, so observed ratio is, if anything, an overestimate"
+    }
+  }
+}
