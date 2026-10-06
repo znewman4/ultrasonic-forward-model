@@ -8,7 +8,7 @@ source: src/imaging/tfm.py
 
 This note explains the TFM implementation in [`src/imaging/tfm.py`](../src/imaging/tfm.py) (`tfm_image`). It is written for Obsidian: maths uses `$...$` / `$$...$$` and code is in fenced blocks.
 
-The algorithm is the standard delay-and-sum TFM of the Bristol array-imaging literature (Holmes *et al.* 2005), and follows roughly the same structure as the Bristol NDE group's **Brain** MATLAB library. See [[#References]] and [[#Differences from Brain]].
+
 
 ---
 
@@ -227,7 +227,7 @@ Because the forward model uses the same straight-ray delay formula, this is a *s
 - **Homogeneous, isotropic medium**, single wave speed $c$; direct (no wall/interface) paths only, longitudinal only. No refraction, mode conversion, or back-wall/skip paths.
 - **Contact array**: all elements at $z=0$ (no wedge/immersion standoff).
 - **Point-like, omnidirectional elements**: no element directivity, no beam-spreading ($1/\sqrt{r}$ in 2-D) or attenuation compensation, no apodisation. Every pair has weight 1.
-- **Envelope image** via the Brain1-style analytic signal (`hilbert_on=True`); set `False` for RF fringes.
+- **Real RF, magnitude of signed sum** – not an envelope (see below).
 - **Linear interpolation** of the sampled A-scans; at 5 MHz with 20 ns sampling (50 samples/period) this is adequate, but coarser sampling would call for upsampling or higher-order interpolation.
 - **Zero outside the time window**, so near-surface and deep pixels see fewer valid pairs.
 - Image is **2-D** (x–z plane).
@@ -238,36 +238,26 @@ The physics-extended forward models (`src/models/point_reflector_physics.py`, `d
 
 ## 6. Differences from Brain
 
-Brain1 ([ndtatbristol/brain1](https://github.com/ndtatbristol/brain1)) is Bristol's MATLAB array-imaging toolbox. The comparison below is based on `fn_calc_tfm_focal_law3.m` and `fn_fast_DAS3.m`.
+Brain is Bristol's MATLAB array-imaging/forward-modelling toolbox (check the group's GitHub organisation for the current repository). From the published algorithm it implements, the main points of comparison are below. I wrote this section from the literature and could not inspect the Brain source, so confirm the details against its code.
 
 | Aspect | This implementation | Typical Bristol/Brain practice |
 |---|---|---|
 | Core algorithm | Delay-and-sum over all $N^2$ pairs | Same |
 | Interpolation | Linear | Linear (or upsampled data) |
-| Signal form | Analytic signal (Hilbert, FFT mask) per A-scan, then $\lvert\text{sum}\rvert$ (`hilbert_on=True`) | Same (`focal_law.hilbert_on = 1`) |
+| Signal form | Real RF; $\lvert\text{sum}\rvert$ | Often the analytic signal (Hilbert transform) before summing, then magnitude, which gives a smooth envelope image |
 | Path model | Straight ray, one speed | Also ray-traced paths through interfaces and multiple modes (e.g. LL, LT, TT, skip paths) |
 | Weighting | None | Optional amplitude/directivity/aperture weighting |
 | Output | Raw magnitude | Usually dB-normalised relative to max |
 
-### Hilbert transform (implemented, as in Brain1)
-
-In [ndtatbristol/brain1](https://github.com/ndtatbristol/brain1), `fn_calc_tfm_focal_law3.m` sets `focal_law.hilbert_on = 1`, and `fn_fast_DAS3.m` / `fn_fast_DAS2.m` then convert every time trace to its analytic signal **before** delay-and-sum, using an FFT mask:
-
-```matlab
-% BRAIN (CPU path): keep bins 1..N/2-1, zero the rest, inverse FFT (GPU path also x2)
-time_data = ifft(spdiags([1:N]' < N/2, 0, N, N) * fft(time_data));
-```
-
-`src/imaging/tfm.py` now does the same (`hilbert_on=True` is the default):
+A cheap route to the envelope image with the current code:
 
 ```python
-def analytic_signal(data):
-    nt = data.shape[-1]
-    keep = (np.arange(1, nt + 1) < nt / 2).astype(float)   # MATLAB 1-based bins
-    return np.fft.ifft(np.fft.fft(data, axis=-1) * keep, axis=-1) * 2.0
+from scipy.signal import hilbert
+fmc_analytic = hilbert(fmc, axis=-1)                       # complex (N, N, Nt)
+envelope_image = tfm_image(fmc_analytic, time_s, elements, x_grid, z_grid, c)
 ```
 
-The complex traces are interpolated and summed exactly as before, and the final `np.abs` of the complex sum gives the **envelope** image. Pass `hilbert_on=False` for the old RF-magnitude image. Note this differs slightly from `scipy.signal.hilbert` (no special DC/Nyquist weighting, no padding), which is a negligible difference for zero-mean band-limited data. Brain1 interpolates the time data by `round(t/dt)` (nearest) or linear; this code uses linear.
+By reading the code, `tfm_image` should accept complex data unchanged: the interpolation is plain arithmetic and the final `np.abs` of the complex sum is the envelope. I haven't run this, so test it before relying on it.
 
 A dB display:
 
@@ -284,6 +274,6 @@ image_db = 20 * np.log10(image / image.max() + 1e-12)
 3. A. J. Hunter, B. W. Drinkwater, P. D. Wilcox, **"The wavenumber algorithm for full-matrix imaging using an ultrasonic array"**, *IEEE Trans. UFFC* 55(11), 2450–2462, 2008. Fast frequency-domain alternative to delay-and-sum.
 4. P. D. Wilcox, C. Holmes, B. W. Drinkwater, **"Advanced reflector characterization with ultrasonic phased arrays in NDE applications"**, *IEEE Trans. UFFC* 54(8), 1541–1550, 2007. Basis for the scattering-matrix work in the elastic side-drilled-hole model.
 5. J. Zhang, B. W. Drinkwater, P. D. Wilcox, **"Defect characterization using an ultrasonic array to measure the scattering coefficient matrix"**, *IEEE Trans. UFFC* 55(10), 2254–2265, 2008. Relevant to your PP/PS/SP/SS matrix plans.
-6. Bristol NDE group, **BRAIN v1** MATLAB library: <https://github.com/ndtatbristol/brain1>
+6. Bristol NDE group, **Brain** MATLAB library: search GitHub for "ndtatbristol" / "Brain" (I could not confirm the exact repository URL, so paste the right one here).
 
 > The DOIs and URLs were not individually verified. Search each title on the Bristol Research Portal, IEEE Xplore or ScienceDirect to get the canonical link.

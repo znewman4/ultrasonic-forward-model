@@ -1,0 +1,25 @@
+{
+  "fmc_shape": [
+    64,
+    64,
+    1000
+  ],
+  "pairs_recorded": 2080,
+  "time_zero_offset_us": 0.4389214325466047,
+  "backwall_echo_times_us": [
+    16.14547234005827,
+    31.841822453636468
+  ],
+  "backwall_depth_mm_at_6300": 49.44350285777133,
+  "grid_step_mm": 0.16,
+  "peaks_mm": {
+    "raw_time": [
+      0.31500000000001904,
+      50.88
+    ],
+    "offset_corrected": [
+      0.31500000000001904,
+      49.44
+    ]
+  }
+}
